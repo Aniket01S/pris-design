@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PRIS Designs Pvt Ltd – Premium Real Estate Advisory</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Montserrat:wght@200;300;400;600;800&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <style>
+    :root {
+      --gold: #C9A84C;
+      --gold-light: #F0D080;
+      --gold-dim: rgba(201,168,76,0.15);
+      --dark:  #080C12;
+      --dark2: #0E1118;
+      --dark3: #141824;
+      --text:  #E8E2D5;
+      --muted: #7A8090;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { background:var(--dark); color:var(--text); font-family:'Montserrat',sans-serif; overflow-x:hidden; }
+    ::-webkit-scrollbar { width:3px; }
+    ::-webkit-scrollbar-thumb { background:var(--gold); }
+
+    /* HEADER */
+    header {
+      position:fixed; top:0; width:100%; z-index:999;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:20px 60px;
+      background:rgba(8,12,18,0.96);
+      backdrop-filter:blur(14px);
+      border-bottom:1px solid var(--gold-dim);
+    }
+    .logo {
+      font-family:'Cormorant Garamond',serif; font-size:1.4rem; font-weight:700;
+      letter-spacing:0.1em; text-decoration:none;
+      background:linear-gradient(135deg,var(--gold),var(--gold-light));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    }
+    nav ul { display:flex; gap:32px; list-style:none; }
+    nav a { font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); text-decoration:none; transition:color .3s; }
+    nav a:hover { color:var(--gold); }
+    .hamburger { display:none; font-size:1.4rem; cursor:pointer; color:var(--gold); background:none; border:none; }
+
+    /* HERO */
+    .hero {
+      position:relative; height:100vh; min-height:600px;
+      display:flex; align-items:center; overflow:hidden;
+      background:radial-gradient(ellipse 60% 80% at 20% 50%,rgba(201,168,76,0.05) 0%,transparent 70%),var(--dark);
+    }
+    .hero::before {
+      content:''; position:absolute; inset:0; z-index:0;
+      background-image:linear-gradient(rgba(201,168,76,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,0.03) 1px,transparent 1px);
+      background-size:60px 60px;
+    }
+    #building-3d {
+      position:absolute; right:0; top:0;
+      width:56%; height:100%; z-index:1;
+    }
+    .hero-content {
+      position:relative; z-index:2;
+      padding:0 0 0 10vw; max-width:520px;
+    }
+    .eyebrow {
+      display:flex; align-items:center; gap:12px;
+      font-size:0.62rem; letter-spacing:0.3em; text-transform:uppercase;
+      color:var(--gold); margin-bottom:22px;
+    }
+    .eyebrow::before { content:''; width:36px; height:1px; background:var(--gold); }
+    .hero h1 {
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(3.2rem,6.5vw,6rem); font-weight:300; line-height:1.0; margin-bottom:8px;
+    }
+    .hero h1 strong { color:var(--gold); font-weight:700; }
+    .hero-sub { font-size:0.68rem; letter-spacing:0.28em; text-transform:uppercase; color:var(--gold-light); font-weight:600; margin-bottom:20px; }
+    .hero p { font-size:0.88rem; line-height:1.9; color:var(--muted); font-weight:300; max-width:420px; margin-bottom:38px; }
+    .btn-row { display:flex; gap:14px; flex-wrap:wrap; }
+    .btn-gold {
+      padding:13px 32px; border:none; cursor:pointer;
+      background:linear-gradient(135deg,var(--gold),var(--gold-light));
+      color:#080C12; font-family:'Montserrat',sans-serif;
+      font-size:0.62rem; letter-spacing:0.2em; text-transform:uppercase; font-weight:700;
+      clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+      transition:transform .3s,box-shadow .3s;
+    }
+    .btn-gold:hover { transform:translateY(-2px); box-shadow:0 10px 30px rgba(201,168,76,0.4); }
+    .btn-outline {
+      padding:13px 32px; cursor:pointer; background:transparent; color:var(--text);
+      border:1px solid rgba(201,168,76,0.35); font-family:'Montserrat',sans-serif;
+      font-size:0.62rem; letter-spacing:0.2em; text-transform:uppercase; transition:all .3s;
+    }
+    .btn-outline:hover { border-color:var(--gold); color:var(--gold); background:rgba(201,168,76,0.04); }
+
+    /* STATS BAR */
+    .stats-bar { display:flex; background:var(--dark2); border-top:1px solid var(--gold-dim); border-bottom:1px solid var(--gold-dim); }
+    .stat { flex:1; text-align:center; padding:28px 20px; border-right:1px solid var(--gold-dim); }
+    .stat:last-child { border-right:none; }
+    .stat-num { font-family:'Cormorant Garamond',serif; font-size:2.6rem; font-weight:700; color:var(--gold); line-height:1; }
+    .stat-label { font-size:0.58rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--muted); margin-top:6px; }
+
+    /* SECTION BASE */
+    section { padding:90px 10vw; }
+    .sec-label { display:flex; align-items:center; gap:12px; font-size:0.58rem; letter-spacing:0.35em; text-transform:uppercase; color:var(--gold); margin-bottom:14px; }
+    .sec-label::before { content:''; width:28px; height:1px; background:var(--gold); }
+    .sec-title { font-family:'Cormorant Garamond',serif; font-size:clamp(2.2rem,4.5vw,3.6rem); font-weight:300; line-height:1.1; margin-bottom:50px; }
+    .sec-title em { font-style:italic; color:var(--gold); }
+
+    /* ABOUT */
+    #about { background:var(--dark2); display:grid; grid-template-columns:1fr 1fr; gap:70px; align-items:center; }
+    .about-text p { font-size:0.88rem; line-height:1.9; color:var(--muted); margin-bottom:18px; font-weight:300; }
+    .sbu-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:28px; }
+    .sbu-item {
+      padding:14px 18px; border:1px solid var(--gold-dim); color:var(--muted);
+      font-size:0.68rem; letter-spacing:0.12em; text-transform:uppercase;
+      transition:all .3s; position:relative; overflow:hidden;
+    }
+    .sbu-item::before { content:''; position:absolute; left:0; top:0; width:3px; height:100%; background:var(--gold); transform:scaleY(0); transition:transform .3s; }
+    .sbu-item:hover { border-color:var(--gold); color:var(--gold); }
+    .sbu-item:hover::before { transform:scaleY(1); }
+    #building-3d-2 { width:100%; height:400px; display:block; }
+
+    /* SERVICES */
+    #services { background:var(--dark); }
+    .services-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:2px; }
+    .svc-card { background:var(--dark2); padding:36px 26px; position:relative; overflow:hidden; transition:background .35s; }
+    .svc-card::after { content:''; position:absolute; bottom:0; left:0; width:100%; height:2px; background:linear-gradient(90deg,var(--gold),transparent); transform:scaleX(0); transform-origin:left; transition:transform .4s; }
+    .svc-card:hover { background:var(--dark3); }
+    .svc-card:hover::after { transform:scaleX(1); }
+    .svc-num { position:absolute; top:14px; right:18px; font-family:'Cormorant Garamond',serif; font-size:3.5rem; font-weight:700; color:rgba(201,168,76,0.06); line-height:1; }
+    .svc-icon { font-size:1.7rem; margin-bottom:18px; }
+    .svc-card h3 { font-family:'Cormorant Garamond',serif; font-size:1.15rem; font-weight:600; color:var(--text); margin-bottom:10px; }
+    .svc-card p { font-size:0.74rem; line-height:1.75; color:var(--muted); font-weight:300; }
+
+    /* LEADERSHIP */
+    #leadership { background:var(--dark2); }
+    .team-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+    .team-card { background:var(--dark); border:1px solid var(--gold-dim); overflow:hidden; transition:border-color .3s,transform .3s; }
+    .team-card:hover { border-color:rgba(201,168,76,0.5); transform:translateY(-6px); }
+    .team-avatar {
+      width:100%; height:280px;
+      background:linear-gradient(135deg,var(--dark3),var(--dark2));
+      overflow:hidden; position:relative;
+    }
+    .team-avatar img {
+      width:100%; height:100%;
+      object-fit:cover; object-position:center top;
+      display:block;
+      transition:transform .4s ease;
+    }
+    .team-card:hover .team-avatar img { transform:scale(1.05); }
+    .team-info { padding:22px; border-top:1px solid var(--gold-dim); }
+    .team-info h3 { font-family:'Cormorant Garamond',serif; font-size:1.15rem; color:var(--gold); margin-bottom:4px; }
+    .team-role { font-size:0.58rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--muted); margin-bottom:12px; }
+    .team-info p { font-size:0.74rem; line-height:1.7; color:var(--muted); font-weight:300; }
+
+    /* PROCESS */
+    #workflow { background:var(--dark); }
+    .workflow-grid { display:grid; grid-template-columns:1fr 1fr; gap:56px; }
+    .workflow-block h3 { font-family:'Cormorant Garamond',serif; font-size:1.35rem; color:var(--gold); margin-bottom:28px; }
+    .wf-step { display:flex; gap:22px; align-items:flex-start; padding:18px 0; border-bottom:1px solid var(--gold-dim); }
+    .wf-num { font-family:'Cormorant Garamond',serif; font-size:2.2rem; font-weight:700; color:rgba(201,168,76,0.2); line-height:1; flex-shrink:0; width:44px; }
+    .wf-text { padding-top:4px; font-size:0.8rem; line-height:1.7; color:var(--muted); font-weight:300; }
+
+    /* WHY US */
+    #why { background:var(--dark2); }
+    .why-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:20px; }
+    .why-card { background:var(--dark); padding:34px 22px; text-align:center; border-top:2px solid transparent; transition:border-color .3s,transform .3s; }
+    .why-card:hover { border-top-color:var(--gold); transform:translateY(-4px); }
+    .why-icon { font-size:1.9rem; margin-bottom:14px; }
+    .why-card p { font-size:0.74rem; line-height:1.7; color:var(--muted); font-weight:300; }
+
+    /* TRANSACTIONS */
+    #transactions { background:var(--dark); }
+    .tx-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:2px; }
+    .tx-item { background:var(--dark2); padding:26px 22px; display:flex; align-items:center; gap:14px; border-left:3px solid transparent; transition:all .3s; }
+    .tx-item:hover { border-left-color:var(--gold); background:var(--dark3); }
+    .tx-dot { width:7px; height:7px; border-radius:50%; background:var(--gold); flex-shrink:0; box-shadow:0 0 10px rgba(201,168,76,0.6); }
+    .tx-city { font-size:0.58rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold); margin-bottom:4px; }
+    .tx-brand { font-family:'Cormorant Garamond',serif; font-size:1.1rem; color:var(--text); }
+
+    /* BRANDS */
+    #brands { background:var(--dark2); }
+    .brands-desc { font-size:0.8rem; color:var(--muted); margin-top:-34px; margin-bottom:44px; font-weight:300; }
+    .brand-category { margin-bottom:44px; }
+    .brand-cat-label { font-size:0.58rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--gold); margin-bottom:20px; display:flex; align-items:center; gap:14px; }
+    .brand-cat-label::after { content:''; flex:1; height:1px; background:linear-gradient(90deg,rgba(201,168,76,0.3),transparent); }
+    .brand-track-wrap {
+      overflow:hidden;
+      width:100%;
+    }
+    .brand-track {
+      display:flex;
+      gap:16px;
+      width:max-content;
+      will-change:transform;
+    }
+    .brand-track.left  { animation:scrollLeft 35s linear infinite; }
+    .brand-track.right { animation:scrollRight 35s linear infinite; }
+    @keyframes scrollLeft  { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+    @keyframes scrollRight { 0%{transform:translateX(-50%)} 100%{transform:translateX(0)} }
+    .brand-card {
+      flex-shrink:0;
+      width:160px; height:80px;
+      background:var(--dark3);
+      border:1px solid rgba(201,168,76,0.25);
+      display:flex; align-items:center; justify-content:center;
+      padding:14px;
+      transition:border-color .3s, background .3s;
+    }
+    .brand-card:hover { border-color:rgba(201,168,76,0.6); background:rgba(201,168,76,0.07); }
+    .brand-card img { max-width:100%; max-height:52px; object-fit:contain; display:block; }
+    .brand-name-text {
+      font-family:'Cormorant Garamond',serif;
+      font-size:1rem; font-weight:600;
+      color:var(--gold);
+      text-align:center; line-height:1.3;
+      letter-spacing:0.04em;
+      display:block;
+      white-space:nowrap;
+    }
+
+    /* CONTACT */
+    #contact { background:var(--dark); display:grid; grid-template-columns:1fr 1fr; gap:72px; }
+    .contact-left h3 { font-family:'Cormorant Garamond',serif; font-size:1.5rem; color:var(--gold); margin-bottom:10px; }
+    .contact-left p { font-size:0.82rem; line-height:1.9; color:var(--muted); font-weight:300; margin-bottom:24px; }
+    .office-tags { display:flex; flex-wrap:wrap; gap:8px; margin-top:20px; }
+    .office-tag { padding:7px 16px; border:1px solid var(--gold-dim); font-size:0.62rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); }
+    .contact-form { display:flex; flex-direction:column; gap:14px; }
+    .form-group { display:flex; flex-direction:column; gap:6px; }
+    .form-group label { font-size:0.58rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); }
+    .form-group input, .form-group textarea { background:var(--dark2); border:1px solid var(--gold-dim); color:var(--text); padding:13px 16px; font-family:'Montserrat',sans-serif; font-size:0.84rem; font-weight:300; outline:none; transition:border-color .3s; width:100%; }
+    .form-group input:focus, .form-group textarea:focus { border-color:var(--gold); }
+    .form-group textarea { min-height:96px; resize:none; }
+    #form-status { display:none; padding:13px 16px; font-size:0.76rem; letter-spacing:0.06em; margin-top:4px; }
+
+    /* FOOTER */
+    footer { background:var(--dark2); border-top:1px solid var(--gold-dim); padding:56px 10vw 28px; }
+    .footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:50px; margin-bottom:44px; }
+    .footer-brand .logo { font-size:1.25rem; margin-bottom:14px; display:block; }
+    .footer-brand p { font-size:0.76rem; line-height:1.8; color:var(--muted); font-weight:300; }
+    .footer-col h4 { font-size:0.58rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--gold); margin-bottom:18px; }
+    .footer-col ul { list-style:none; display:flex; flex-direction:column; gap:10px; }
+    .footer-col a { font-size:0.76rem; color:var(--muted); text-decoration:none; transition:color .3s; }
+    .footer-col a:hover { color:var(--gold); }
+    .footer-bottom { border-top:1px solid var(--gold-dim); padding-top:22px; display:flex; justify-content:space-between; align-items:center; }
+    .footer-bottom p { font-size:0.62rem; color:var(--muted); }
+    .socials { display:flex; gap:18px; }
+    .socials a { font-size:0.62rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--muted); text-decoration:none; transition:color .3s; }
+    .socials a:hover { color:var(--gold); }
+
+    /* REVEAL ANIMATION */
+    .reveal { opacity:1; transform:translateY(0); transition:opacity .7s ease,transform .7s ease; }
+    .reveal.in { opacity:1; transform:translateY(0); }
+
+    /* RESPONSIVE */
+    @media(max-width:900px) {
+      header { padding:16px 24px; }
+      nav { display:none; }
+      .hamburger { display:block; }
+      #building-3d { width:100%; opacity:0.25; }
+      .hero-content { max-width:100%; padding:80px 24px 0; }
+      .services-grid,.team-grid,.tx-grid,.why-grid { grid-template-columns:1fr 1fr; }
+      #about,#contact,.workflow-grid,.footer-grid { grid-template-columns:1fr; }
+      #about > div:last-child { display:none; }
+      section { padding:60px 24px; }
+      .stats-bar { flex-wrap:wrap; }
+      .stat { min-width:50%; }
+    }
+    @media(max-width:480px) {
+      .services-grid,.team-grid,.tx-grid,.why-grid { grid-template-columns:1fr; }
+      .sbu-grid { grid-template-columns:1fr; }
+      .stat { min-width:100%; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <a class="logo" href="#">PRIS Designs</a>
+  <nav>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#leadership">Team</a></li>
+      <li><a href="#transactions">Deals</a></li>
+      <li><a href="#brands">Brands</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+  <button class="hamburger" aria-label="Menu">&#9776;</button>
+</header>
+
+<!-- HERO -->
+<section id="home" class="hero">
+  <div id="building-3d"></div>
+  <div class="hero-content">
+    <div class="eyebrow">Premium Real Estate Advisory</div>
+    <h1>PRIS<br><strong>Designs</strong><br>Pvt Ltd</h1>
+    <div class="hero-sub">We Add Real Value</div>
+    <p>Integrated real estate solutions across the entire value chain — connecting landlords, tenants, and investors across India.</p>
+    <div class="btn-row">
+      <button class="btn-gold" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})">Explore Services</button>
+      <button class="btn-outline" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Contact Us</button>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat"><div class="stat-num" data-target="15">15+</div><div class="stat-label">Years Experience</div></div>
+  <div class="stat"><div class="stat-num" data-target="200">200+</div><div class="stat-label">Transactions Closed</div></div>
+  <div class="stat"><div class="stat-num" data-target="50">50+</div><div class="stat-label">Premium Brands</div></div>
+  <div class="stat"><div class="stat-num" data-target="5">5</div><div class="stat-label">Office Locations</div></div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-text">
+    <div class="sec-label">Who We Are</div>
+    <h2 class="sec-title">Real Estate <em>Redefined</em></h2>
+    <p>PRIS Designs Private Ltd specializes in real estate services across the entire value chain, delivering integrated solutions to landlords, tenants, and investors with deep market expertise built over a decade.</p>
+    <p>Our team operates with precision, integrity, and a commitment to creating lasting value for every stakeholder in every transaction.</p>
+    <div class="sbu-grid">
+      <div class="sbu-item">🏬 Retail</div>
+      <div class="sbu-item">🌍 Land Services</div>
+      <div class="sbu-item">🏠 Residential</div>
+      <div class="sbu-item">🏨 Hospitality</div>
+      <div class="sbu-item">📦 Warehousing</div>
+      <div class="sbu-item">📊 Consulting</div>
+    </div>
+  </div>
+  <div>
+    <div id="building-3d-2"></div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="sec-label">What We Do</div>
+  <h2 class="sec-title">Our <em>Services</em></h2>
+  <div class="services-grid">
+    <div class="svc-card reveal"><div class="svc-num">01</div><div class="svc-icon">🏬</div><h3>Retail / FMCG Leasing</h3><p>End-to-end retail leasing for top FMCG brands — from site selection to deal closure across India's prime corridors.</p></div>
+    <div class="svc-card reveal"><div class="svc-num">02</div><div class="svc-icon">🏨</div><h3>Hospitality</h3><p>Hotel brand tie-ups, management contracts, and acquisitions for hospitality assets across tier 1 &amp; 2 cities.</p></div>
+    <div class="svc-card reveal"><div class="svc-num">03</div><div class="svc-icon">🌍</div><h3>Land Transactions</h3><p>Strategic land acquisition and disposition services for developers, investors, and corporate occupiers.</p></div>
+    <div class="svc-card reveal"><div class="svc-num">04</div><div class="svc-icon">🏢</div><h3>Commercial Real Estate</h3><p>Office leasing, co-working, and commercial space transactions across Mumbai, Hyderabad, Bangalore and beyond.</p></div>
+    <div class="svc-card reveal"><div class="svc-num">05</div><div class="svc-icon">🏠</div><h3>Residential Broking</h3><p>Luxury and mid-segment residential sales with over 200 apartments placed with discerning buyers.</p></div>
+    <div class="svc-card reveal"><div class="svc-num">06</div><div class="svc-icon">🎡</div><h3>Leisure</h3><p>Entertainment zones, amusement parks, and F&amp;B clusters — end-to-end leisure real estate advisory.</p></div>
+    <div class="svc-card reveal"><div class="svc-num">07</div><div class="svc-icon">💰</div><h3>Capital Transactions</h3><p>Structured investment advisory, portfolio monetization, and capital market linkages for real estate assets.</p></div>
+    <div class="svc-card reveal"><div class="svc-num">08</div><div class="svc-icon">📊</div><h3>Research &amp; Consulting</h3><p>Data-driven market intelligence, feasibility studies, and strategic consulting for investors and developers.</p></div>
+  </div>
+</section>
+
+<!-- LEADERSHIP -->
+<section id="leadership">
+  <div class="sec-label">Our People</div>
+  <h2 class="sec-title">Leadership <em>Team</em></h2>
+  <div class="team-grid">
+    <div class="team-card reveal">
+      <div class="team-avatar"><img src="purshouttam.jpeg" alt="Purushottam Singh"></div>
+      <div class="team-info"><h3>Purushottam Singh</h3><div class="team-role">Director &amp; Co-Founder</div><p>15+ years in real estate. Previously with JLL and Cushman &amp; Wakefield. Leads retail and commercial strategy.</p></div>
+    </div>
+    <div class="team-card reveal">
+      <div class="team-avatar"><img src="prem.jpeg" alt="Prem Singh"></div>
+      <div class="team-info"><h3>Prem Singh</h3><div class="team-role">Director &amp; Co-Founder</div><p>Over a decade of expertise in retail, commercial, and land transactions across major Indian metros.</p></div>
+    </div>
+    <div class="team-card reveal">
+      <div class="team-avatar"><img src="pintu.jpeg" alt="Pintu Singh"></div>
+      <div class="team-info"><h3>Pintu Singh</h3><div class="team-role">Residential Business Lead</div><p>Facilitated 200+ residential apartment sales with deep understanding of buyer psychology and luxury markets.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="workflow">
+  <div class="sec-label">How We Work</div>
+  <h2 class="sec-title">Our <em>Process</em></h2>
+  <div class="workflow-grid">
+    <div class="workflow-block reveal">
+      <h3>🏬 Retail / FMCG Leasing</h3>
+      <div class="wf-step"><div class="wf-num">01</div><div class="wf-text">Market Research &amp; Location Analysis</div></div>
+      <div class="wf-step"><div class="wf-num">02</div><div class="wf-text">Property Selection &amp; Brand Matching</div></div>
+      <div class="wf-step"><div class="wf-num">03</div><div class="wf-text">Lease Negotiation &amp; Financial Structuring</div></div>
+      <div class="wf-step"><div class="wf-num">04</div><div class="wf-text">Legal &amp; Compliance Checks</div></div>
+      <div class="wf-step"><div class="wf-num">05</div><div class="wf-text">Finalization &amp; Handover</div></div>
+    </div>
+    <div class="workflow-block reveal">
+      <h3>🏨 Hotel Transaction Process</h3>
+      <div class="wf-step"><div class="wf-num">01</div><div class="wf-text">Identify Hospitality Properties</div></div>
+      <div class="wf-step"><div class="wf-num">02</div><div class="wf-text">Propose to Hotel Brands</div></div>
+      <div class="wf-step"><div class="wf-num">03</div><div class="wf-text">Structure Management Contracts</div></div>
+      <div class="wf-step"><div class="wf-num">04</div><div class="wf-text">Legal &amp; Financial Due Diligence</div></div>
+      <div class="wf-step"><div class="wf-num">05</div><div class="wf-text">Project Completion &amp; Brand Onboarding</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section id="why">
+  <div class="sec-label">Why Us</div>
+  <h2 class="sec-title">The PRIS <em>Advantage</em></h2>
+  <div class="why-grid">
+    <div class="why-card reveal"><div class="why-icon">🏆</div><p>Access to high-value premium properties across India</p></div>
+    <div class="why-card reveal"><div class="why-icon">🤝</div><p>Strong network with 50+ major national &amp; global brands</p></div>
+    <div class="why-card reveal"><div class="why-icon">🔗</div><p>End-to-end deal structuring and seamless execution</p></div>
+    <div class="why-card reveal"><div class="why-icon">📈</div><p>Data-driven market insights for informed decisions</p></div>
+    <div class="why-card reveal"><div class="why-icon">✅</div><p>Proven track record across 200+ closed transactions</p></div>
+  </div>
+</section>
+
+<!-- TRANSACTIONS -->
+<section id="transactions">
+  <div class="sec-label">Our Work</div>
+  <h2 class="sec-title">Notable <em>Transactions</em></h2>
+  <div class="tx-grid">
+    <div class="tx-item reveal"><div class="tx-dot"></div><div><div class="tx-city">Hyderabad</div><div class="tx-brand">Big Bazaar</div></div></div>
+    <div class="tx-item reveal"><div class="tx-dot"></div><div><div class="tx-city">Hyderabad</div><div class="tx-brand">Brand Factory</div></div></div>
+    <div class="tx-item reveal"><div class="tx-dot"></div><div><div class="tx-city">Mumbai</div><div class="tx-brand">Starbucks</div></div></div>
+    <div class="tx-item reveal"><div class="tx-dot"></div><div><div class="tx-city">Mumbai</div><div class="tx-brand">Blue Tokai</div></div></div>
+    <div class="tx-item reveal"><div class="tx-dot"></div><div><div class="tx-city">Thane</div><div class="tx-brand">Starbucks</div></div></div>
+    <div class="tx-item reveal"><div class="tx-dot"></div><div><div class="tx-city">Nashik</div><div class="tx-brand">KFC</div></div></div>
+    <div class="tx-item reveal"><div class="tx-dot"></div><div><div class="tx-city">Ahmedabad</div><div class="tx-brand">Tim Hortons</div></div></div>
+    <div class="tx-item reveal"><div class="tx-dot"></div><div><div class="tx-city">Hyderabad</div><div class="tx-brand">Barbeque Nation</div></div></div>
+  </div>
+</section>
+
+<!-- BRANDS -->
+<section id="brands">
+  <div class="sec-label">Our Network</div>
+  <h2 class="sec-title">Brands We <em>Work With</em></h2>
+  <p class="brands-desc">Trusted by India's most recognised retail, F&amp;B, hospitality and real estate brands</p>
+
+  <div class="brand-category">
+    <div class="brand-cat-label">Food &amp; Beverage</div>
+    <div class="brand-track-wrap">
+      <div class="brand-track left">
+        <div class="brand-card"><span class="brand-name-text">Blue Tokai</span></div>
+        <div class="brand-card"><span class="brand-name-text">Tim Hortons</span></div>
+        <div class="brand-card"><span class="brand-name-text">Starbucks</span></div>
+        <div class="brand-card"><span class="brand-name-text">Burger King</span></div>
+        <div class="brand-card"><span class="brand-name-text">Third Wave Coffee</span></div>
+        <div class="brand-card"><span class="brand-name-text">Barista</span></div>
+        <div class="brand-card"><span class="brand-name-text">Kailash Parbat</span></div>
+        <div class="brand-card"><span class="brand-name-text">Domino's Pizza</span></div>
+        <div class="brand-card"><span class="brand-name-text">Costa Coffee</span></div>
+        <div class="brand-card"><span class="brand-name-text">Banana Leaf</span></div>
+        <div class="brand-card"><span class="brand-name-text">KFC</span></div>
+        <div class="brand-card"><span class="brand-name-text">Wow Momo</span></div>
+        <div class="brand-card"><span class="brand-name-text">Shubh Sagar</span></div>
+        <div class="brand-card"><span class="brand-name-text">Chinese Wok</span></div>
+        <div class="brand-card"><span class="brand-name-text">McDonald's</span></div>
+        <!-- duplicate for seamless loop -->
+        <div class="brand-card"><span class="brand-name-text">Blue Tokai</span></div>
+        <div class="brand-card"><span class="brand-name-text">Tim Hortons</span></div>
+        <div class="brand-card"><span class="brand-name-text">Starbucks</span></div>
+        <div class="brand-card"><span class="brand-name-text">Burger King</span></div>
+        <div class="brand-card"><span class="brand-name-text">Third Wave Coffee</span></div>
+        <div class="brand-card"><span class="brand-name-text">Barista</span></div>
+        <div class="brand-card"><span class="brand-name-text">Kailash Parbat</span></div>
+        <div class="brand-card"><span class="brand-name-text">Domino's Pizza</span></div>
+        <div class="brand-card"><span class="brand-name-text">Costa Coffee</span></div>
+        <div class="brand-card"><span class="brand-name-text">Banana Leaf</span></div>
+        <div class="brand-card"><span class="brand-name-text">KFC</span></div>
+        <div class="brand-card"><span class="brand-name-text">Wow Momo</span></div>
+        <div class="brand-card"><span class="brand-name-text">Shubh Sagar</span></div>
+        <div class="brand-card"><span class="brand-name-text">Chinese Wok</span></div>
+        <div class="brand-card"><span class="brand-name-text">McDonald's</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="brand-category">
+    <div class="brand-cat-label">Fashion &amp; Retail</div>
+    <div class="brand-track-wrap">
+      <div class="brand-track right">
+        <div class="brand-card"><span class="brand-name-text">Zudio</span></div>
+        <div class="brand-card"><span class="brand-name-text">Westside</span></div>
+        <div class="brand-card"><span class="brand-name-text">Adidas</span></div>
+        <div class="brand-card"><span class="brand-name-text">Bata</span></div>
+        <div class="brand-card"><span class="brand-name-text">Heads Up For Tails</span></div>
+        <div class="brand-card"><span class="brand-name-text">Style Up</span></div>
+        <div class="brand-card"><span class="brand-name-text">Intune</span></div>
+        <div class="brand-card"><span class="brand-name-text">Future Group</span></div>
+        <div class="brand-card"><span class="brand-name-text">Big Bazaar</span></div>
+        <div class="brand-card"><span class="brand-name-text">Brand Factory</span></div>
+        <div class="brand-card"><span class="brand-name-text">Croma</span></div>
+        <div class="brand-card"><span class="brand-name-text">Pantaloons</span></div>
+        <div class="brand-card"><span class="brand-name-text">Rare Rabbit</span></div>
+        <div class="brand-card"><span class="brand-name-text">Taneira</span></div>
+        <div class="brand-card"><span class="brand-name-text">The Raymond Shop</span></div>
+        <!-- duplicate -->
+        <div class="brand-card"><span class="brand-name-text">Zudio</span></div>
+        <div class="brand-card"><span class="brand-name-text">Westside</span></div>
+        <div class="brand-card"><span class="brand-name-text">Adidas</span></div>
+        <div class="brand-card"><span class="brand-name-text">Bata</span></div>
+        <div class="brand-card"><span class="brand-name-text">Heads Up For Tails</span></div>
+        <div class="brand-card"><span class="brand-name-text">Style Up</span></div>
+        <div class="brand-card"><span class="brand-name-text">Intune</span></div>
+        <div class="brand-card"><span class="brand-name-text">Future Group</span></div>
+        <div class="brand-card"><span class="brand-name-text">Big Bazaar</span></div>
+        <div class="brand-card"><span class="brand-name-text">Brand Factory</span></div>
+        <div class="brand-card"><span class="brand-name-text">Croma</span></div>
+        <div class="brand-card"><span class="brand-name-text">Pantaloons</span></div>
+        <div class="brand-card"><span class="brand-name-text">Rare Rabbit</span></div>
+        <div class="brand-card"><span class="brand-name-text">Taneira</span></div>
+        <div class="brand-card"><span class="brand-name-text">The Raymond Shop</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="brand-category">
+    <div class="brand-cat-label">Hospitality</div>
+    <div class="brand-track-wrap">
+      <div class="brand-track left">
+        <div class="brand-card"><span class="brand-name-text">Radisson Blu</span></div>
+        <div class="brand-card"><span class="brand-name-text">Holiday Inn</span></div>
+        <div class="brand-card"><span class="brand-name-text">Fortune Hotels</span></div>
+        <div class="brand-card"><span class="brand-name-text">Marriott</span></div>
+        <div class="brand-card"><span class="brand-name-text">Bloom Hotels</span></div>
+        <div class="brand-card"><span class="brand-name-text">Sarovar Premiere</span></div>
+        <div class="brand-card"><span class="brand-name-text">Park Inn</span></div>
+        <div class="brand-card"><span class="brand-name-text">Tulip Inn</span></div>
+        <div class="brand-card"><span class="brand-name-text">Sarovar Portico</span></div>
+        <div class="brand-card"><span class="brand-name-text">Hyatt</span></div>
+        <!-- duplicate -->
+        <div class="brand-card"><span class="brand-name-text">Radisson Blu</span></div>
+        <div class="brand-card"><span class="brand-name-text">Holiday Inn</span></div>
+        <div class="brand-card"><span class="brand-name-text">Fortune Hotels</span></div>
+        <div class="brand-card"><span class="brand-name-text">Marriott</span></div>
+        <div class="brand-card"><span class="brand-name-text">Bloom Hotels</span></div>
+        <div class="brand-card"><span class="brand-name-text">Sarovar Premiere</span></div>
+        <div class="brand-card"><span class="brand-name-text">Park Inn</span></div>
+        <div class="brand-card"><span class="brand-name-text">Tulip Inn</span></div>
+        <div class="brand-card"><span class="brand-name-text">Sarovar Portico</span></div>
+        <div class="brand-card"><span class="brand-name-text">Hyatt</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="brand-category">
+    <div class="brand-cat-label">Real Estate &amp; Developers</div>
+    <div class="brand-track-wrap">
+      <div class="brand-track right">
+        <div class="brand-card"><span class="brand-name-text">Adani Realty</span></div>
+        <div class="brand-card"><span class="brand-name-text">Hiranandani</span></div>
+        <div class="brand-card"><span class="brand-name-text">Godrej Properties</span></div>
+        <div class="brand-card"><span class="brand-name-text">Concorde Group</span></div>
+        <div class="brand-card"><span class="brand-name-text">Kalpataru</span></div>
+        <div class="brand-card"><span class="brand-name-text">L&amp;T Realty</span></div>
+        <div class="brand-card"><span class="brand-name-text">Lodha</span></div>
+        <div class="brand-card"><span class="brand-name-text">Mahindra Lifespaces</span></div>
+        <div class="brand-card"><span class="brand-name-text">Oberoi Realty</span></div>
+        <div class="brand-card"><span class="brand-name-text">Prestige Group</span></div>
+        <div class="brand-card"><span class="brand-name-text">Runwal Group</span></div>
+        <div class="brand-card"><span class="brand-name-text">Rustomjee</span></div>
+        <div class="brand-card"><span class="brand-name-text">Salarpuria Sattva</span></div>
+        <div class="brand-card"><span class="brand-name-text">Shapoorji Pallonji</span></div>
+        <div class="brand-card"><span class="brand-name-text">JLL</span></div>
+        <!-- duplicate -->
+        <div class="brand-card"><span class="brand-name-text">Adani Realty</span></div>
+        <div class="brand-card"><span class="brand-name-text">Hiranandani</span></div>
+        <div class="brand-card"><span class="brand-name-text">Godrej Properties</span></div>
+        <div class="brand-card"><span class="brand-name-text">Concorde Group</span></div>
+        <div class="brand-card"><span class="brand-name-text">Kalpataru</span></div>
+        <div class="brand-card"><span class="brand-name-text">L&amp;T Realty</span></div>
+        <div class="brand-card"><span class="brand-name-text">Lodha</span></div>
+        <div class="brand-card"><span class="brand-name-text">Mahindra Lifespaces</span></div>
+        <div class="brand-card"><span class="brand-name-text">Oberoi Realty</span></div>
+        <div class="brand-card"><span class="brand-name-text">Prestige Group</span></div>
+        <div class="brand-card"><span class="brand-name-text">Runwal Group</span></div>
+        <div class="brand-card"><span class="brand-name-text">Rustomjee</span></div>
+        <div class="brand-card"><span class="brand-name-text">Salarpuria Sattva</span></div>
+        <div class="brand-card"><span class="brand-name-text">Shapoorji Pallonji</span></div>
+        <div class="brand-card"><span class="brand-name-text">JLL</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div>
+    <div class="sec-label">Get In Touch</div>
+    <h2 class="sec-title">Let's <em>Connect</em></h2>
+    <div class="contact-left">
+      <h3>Head Office</h3>
+      <p>424/A Wing Bonanza Building<br>Sahar Plaza, J.B Nagar<br>Andheri East, Mumbai 400059</p>
+      <h3>Phone</h3>
+      <p>+91 9930003578</p>
+      <h3>Branch Offices</h3>
+      <div class="office-tags">
+        <span class="office-tag">Mumbai</span>
+        <span class="office-tag">Kolkata</span>
+        <span class="office-tag">Hyderabad</span>
+        <span class="office-tag">Bangalore</span>
+        <span class="office-tag">Dubai</span>
+      </div>
+    </div>
+  </div>
+  <div>
+    <form class="contact-form" id="contact-form" onsubmit="sendEmail(event)">
+      <div class="form-group">
+        <label for="from_name">Name</label>
+        <input type="text" id="from_name" name="from_name" placeholder="Your full name" required>
+      </div>
+      <div class="form-group">
+        <label for="from_email">Email</label>
+        <input type="email" id="from_email" name="from_email" placeholder="your@email.com" required>
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone</label>
+        <input type="tel" id="phone" name="phone" placeholder="+91 XXXXX XXXXX">
+      </div>
+      <div class="form-group">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" placeholder="Tell us about your requirement…" required></textarea>
+      </div>
+      <button type="submit" class="btn-gold" id="submit-btn">Send Message</button>
+      <div id="form-status"></div>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="logo">PRIS Designs</span>
+      <p>Integrated real estate solutions across India's entire property value chain — retail, hospitality, land, residential, and beyond.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#leadership">Team</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#services">Retail Leasing</a></li>
+        <li><a href="#services">Hospitality</a></li>
+        <li><a href="#services">Land Transactions</a></li>
+        <li><a href="#services">Consulting</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="#contact">Mumbai HQ</a></li>
+        <li><a href="tel:+919930003578">+91 9930003578</a></li>
+        <li><a href="/cdn-cgi/l/email-protection#70191e161f300002190314150319171e035e131f1d"><span class="__cf_email__" data-cfemail="aec7c0c8c1eededcc7ddcacbddc7c9c0dd80cdc1c3">[email&#160;protected]</span></a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2026 PRIS Designs Pvt Ltd. All rights reserved.</p>
+    <div class="socials">
+      <a href="#">LinkedIn</a>
+      <a href="#">Twitter</a>
+      <a href="#">Facebook</a>
+    </div>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+/* ══════════════════════════════════
+   BRAND TRACKS
+══════════════════════════════════ */
+function buildTrack(id, brands) {
+  const track = document.getElementById(id);
+  if (!track) return;
+  [...brands, ...brands].forEach(b => {
+    const card = document.createElement('div');
+    card.className = 'brand-card';
+    card.title = b.name;
+    if (b.url) {
+      const img = document.createElement('img');
+      img.alt = b.name; img.src = b.url;
+      img.style.cssText = 'max-width:100%;max-height:52px;object-fit:contain;display:block;';
+      img.onerror = () => { card.innerHTML = ''; card.innerHTML = `<span class="brand-name-text">${b.name}</span>`; };
+      card.appendChild(img);
+    } else {
+      card.innerHTML = `<span class="brand-name-text">${b.name}</span>`;
+    }
+    track.appendChild(card);
+  });
+}
+
+// ── F&B ──
+const fnbBrands = [
+  {name:'Blue Tokai',        url:null},
+  {name:'Tim Hortons',       url:'https://upload.wikimedia.org/wikipedia/en/thumb/e/e3/Tim_Hortons_logo.svg/120px-Tim_Hortons_logo.svg.png'},
+  {name:'Starbucks',         url:'https://upload.wikimedia.org/wikipedia/en/thumb/d/d3/Starbucks_Corporation_Logo_2011.svg/120px-Starbucks_Corporation_Logo_2011.svg.png'},
+  {name:'Burger King',       url:'https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Burger_King_logo_%281999%29.svg/120px-Burger_King_logo_%281999%29.svg.png'},
+  {name:'Third Wave Coffee', url:null},
+  {name:'Barista',           url:null},
+  {name:'Kailash Parbat',    url:null},
+  {name:"Domino's Pizza",    url:'https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Domino%27s_pizza_logo.svg/120px-Domino%27s_pizza_logo.svg.png'},
+  {name:'Costa Coffee',      url:'https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Costa_Coffee_logo.svg/120px-Costa_Coffee_logo.svg.png'},
+  {name:'Banana Leaf',       url:null},
+  {name:'KFC',               url:'https://upload.wikimedia.org/wikipedia/en/thumb/b/bf/KFC_logo.svg/120px-KFC_logo.svg.png'},
+  {name:'Wow Momo',          url:null},
+  {name:'Shubh Sagar',       url:null},
+  {name:'Chinese Wok',       url:null},
+  {name:"McDonald's",        url:'https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/McDonald%27s_Golden_Arches.svg/80px-McDonald%27s_Golden_Arches.svg.png'},
+];
+// ── Fashion & Retail ──
+const fashionBrands = [
+  {name:'Zudio',              url:null},
+  {name:'Westside',           url:null},
+  {name:'Adidas',             url:'https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Adidas_Logo.svg/120px-Adidas_Logo.svg.png'},
+  {name:'Bata',               url:null},
+  {name:'Heads Up For Tails', url:null},
+  {name:'Style Up',           url:null},
+  {name:'Intune',             url:null},
+  {name:'Future Group',       url:null},
+  {name:'Big Bazaar',         url:null},
+  {name:'Brand Factory',      url:null},
+  {name:'Croma',              url:null},
+  {name:'Pantaloons',         url:null},
+  {name:'Rare Rabbit',        url:null},
+  {name:'Taneira',            url:null},
+  {name:'The Raymond Shop',   url:null},
+];
+// ── Hospitality ──
+const hotelBrands = [
+  {name:'Radisson Blu',       url:null},
+  {name:'Holiday Inn',        url:'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Holiday_Inn_Logo.svg/120px-Holiday_Inn_Logo.svg.png'},
+  {name:'Fortune Hotels',     url:null},
+  {name:'Marriott',           url:'https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Marriott_logo.svg/120px-Marriott_logo.svg.png'},
+  {name:'Bloom Hotels',       url:null},
+  {name:'Sarovar Premiere',   url:null},
+  {name:'Park Inn',           url:null},
+  {name:'Tulip Inn',          url:null},
+  {name:'Sarovar Portico',    url:null},
+  {name:'Hyatt',              url:'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Hyatt_logo.svg/120px-Hyatt_logo.svg.png'},
+];
+// ── Real Estate ──
+const realEstateBrands = [
+  {name:'Adani Realty',       url:null},
+  {name:'Hiranandani',        url:null},
+  {name:'Godrej Properties',  url:null},
+  {name:'Concorde Group',     url:null},
+  {name:'Kalpataru',          url:null},
+  {name:'L&T Realty',         url:null},
+  {name:'Lodha',              url:null},
+  {name:'Mahindra Lifespaces',url:null},
+  {name:'Oberoi Realty',      url:null},
+  {name:'Prestige Group',     url:null},
+  {name:'Runwal Group',       url:null},
+  {name:'Rustomjee',          url:null},
+  {name:'Salarpuria Sattva',  url:null},
+  {name:'Shapoorji Pallonji', url:null},
+  {name:'JLL',                url:null},
+];
+/* ══════════════════════════════════
+   THREE.JS REALISTIC BUILDING
+══════════════════════════════════ */
+function initBuilding(containerId) {
+  const container = document.getElementById(containerId);
+  if (!container || typeof THREE === 'undefined') return;
+
+  const W = container.offsetWidth  || 600;
+  const H = container.offsetHeight || 600;
+
+  const scene = new THREE.Scene();
+  scene.fog   = new THREE.FogExp2(0x04080f, 0.016);
+
+  const camera = new THREE.PerspectiveCamera(42, W/H, 0.1, 500);
+  camera.position.set(0, 10, 30);
+  camera.lookAt(0, 12, 0);
+
+  const renderer = new THREE.WebGLRenderer({antialias:true, alpha:true});
+  renderer.setSize(W, H);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.shadowMap.enabled  = true;
+  renderer.shadowMap.type     = THREE.PCFSoftShadowMap;
+  renderer.toneMapping        = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure= 1.25;
+  container.appendChild(renderer.domElement);
+
+  // Materials
+  const glassMat = new THREE.MeshPhysicalMaterial({color:0x071428, metalness:0.85, roughness:0.05, transparent:true, opacity:0.88});
+  const goldMat  = new THREE.MeshStandardMaterial({color:0xc9a84c, metalness:1.0, roughness:0.15});
+  const concMat  = new THREE.MeshStandardMaterial({color:0x0d1220, metalness:0.2, roughness:0.85});
+  const gndMat   = new THREE.MeshStandardMaterial({color:0x070b12, metalness:0.5, roughness:0.5});
+  const glowMat  = new THREE.MeshStandardMaterial({color:0x000000, emissive:0xff8800, emissiveIntensity:3});
+  const winOn    = () => { const m=new THREE.MeshStandardMaterial({color:0x000000, emissive:0xffd060, emissiveIntensity:0.7+Math.random()*1.3}); return m; };
+  const winOff   = new THREE.MeshStandardMaterial({color:0x040c1e, metalness:0.3, roughness:0.9});
+
+  const grp = new THREE.Group();
+  scene.add(grp);
+
+  function box(w,h,d,mat,x=0,y=0,z=0) {
+    const m = new THREE.Mesh(new THREE.BoxGeometry(w,h,d), mat);
+    m.position.set(x,y,z); m.castShadow=m.receiveShadow=true; return m;
+  }
+
+  // ── Main tower ──
+  const TW=4,TD=3,TH=32;
+  grp.add(box(TW,TH,TD,concMat,0,TH/2,0));
+
+  for (let s of [1,-1]) {
+    for (let f=0;f<21;f++) {
+      const g=glassMat.clone(); g.color.setHSL(0.6,0.45,0.04+Math.random()*0.04);
+      grp.add(box(TW-0.18,1.28,0.05,g,0,0.75+f*1.5,s*(TD/2+0.03)));
+      grp.add(box(TW+0.1,0.07,TD+0.08,goldMat,0,0.75+f*1.5+0.7,0));
+    }
+  }
+  for (let s of [1,-1]) {
+    for (let f=0;f<21;f++) {
+      const g=glassMat.clone(); g.color.setHSL(0.6,0.4,0.03+Math.random()*0.04);
+      grp.add(box(0.05,1.28,TD-0.18,g,s*(TW/2+0.03),0.75+f*1.5,0));
+    }
+  }
+  for (let x of [-TW/2,-TW/6,TW/6,TW/2]) {
+    grp.add(box(0.07,TH,0.07,goldMat,x,TH/2, TD/2));
+    grp.add(box(0.07,TH,0.07,goldMat,x,TH/2,-TD/2));
+  }
+  for (let [cx,cz] of [[-TW/2,-TD/2],[-TW/2,TD/2],[TW/2,-TD/2],[TW/2,TD/2]])
+    grp.add(box(0.22,TH,0.22,goldMat,cx,TH/2,cz));
+
+  // Windows
+  const litWins = [];
+  for (let c=0;c<5;c++) for (let f=0;f<20;f++) {
+    const lit=Math.random()>0.3, wm=lit?winOn():winOff;
+    if(lit) litWins.push(wm);
+    grp.add(box(0.44,0.68,0.02,wm,-TW/2+0.5+c*0.74,0.95+f*1.5, TD/2+0.07));
+  }
+  for (let c=0;c<5;c++) for (let f=0;f<20;f++) {
+    const lit=Math.random()>0.35, wm=lit?winOn():winOff;
+    grp.add(box(0.44,0.68,0.02,wm,-TW/2+0.5+c*0.74,0.95+f*1.5,-(TD/2+0.07)));
+  }
+
+  // Podium
+  for (let [i,sc] of [[0,1.7],[1,1.4],[2,1.18]]) {
+    const ph=1.3,py=i*ph+ph/2-3.5;
+    grp.add(box(TW*sc,ph,TD*sc,concMat,0,py,0));
+    grp.add(box(TW*sc+0.15,0.09,TD*sc+0.15,goldMat,0,py+ph/2,0));
+  }
+
+  // Crown + Spire
+  grp.add(box(TW+0.5,1.3,TD+0.5,concMat,0,TH+0.65,0));
+  grp.add(box(TW+0.7,0.12,TD+0.7,goldMat,0,TH+1.35,0));
+  const spM=new THREE.Mesh(new THREE.CylinderGeometry(0.04,0.18,5.5,8),goldMat);
+  spM.position.set(0,TH+4.25,0); spM.castShadow=true; grp.add(spM);
+  const tipM=new THREE.Mesh(new THREE.SphereGeometry(0.14,8,8),glowMat);
+  tipM.position.set(0,TH+7.2,0); grp.add(tipM);
+
+  // ── Secondary tower ──
+  const T2W=2.6,T2D=2.1,T2H=22,T2X=5.8;
+  grp.add(box(T2W,T2H,T2D,concMat,T2X,T2H/2,0.4));
+  for (let s of [1,-1]) for (let f=0;f<14;f++) {
+    const g=glassMat.clone(); g.color.setHSL(0.6,0.4,0.04+Math.random()*0.04);
+    grp.add(box(T2W-0.15,1.15,0.04,g,T2X,0.65+f*1.55,s*(T2D/2+0.03)+0.4));
+    grp.add(box(T2W+0.08,0.07,T2D+0.08,goldMat,T2X,0.65+f*1.55+0.6,0.4));
+  }
+  for (let [cx,cz] of [[-T2W/2,-T2D/2],[-T2W/2,T2D/2],[T2W/2,-T2D/2],[T2W/2,T2D/2]])
+    grp.add(box(0.16,T2H,0.16,goldMat,T2X+cx,T2H/2,0.4+cz));
+  grp.add(box(T2W+0.35,1.1,T2D+0.35,concMat,T2X,T2H+0.55,0.4));
+  grp.add(box(T2W+0.55,0.1,T2D+0.55,goldMat,T2X,T2H+1.1,0.4));
+
+  // ── Third building ──
+  const T3H=12;
+  grp.add(box(3.2,T3H,2.6,concMat,-5.5,T3H/2,0.2));
+  for (let f=0;f<7;f++) {
+    const g=glassMat.clone(); g.color.setHSL(0.62,0.3,0.05);
+    grp.add(box(2.9,1.05,0.04,g,-5.5,0.55+f*1.5,1.32));
+  }
+  grp.add(box(3.4,0.1,2.8,goldMat,-5.5,T3H+0.05,0.2));
+
+  // Ground
+  const gnd=new THREE.Mesh(new THREE.PlaneGeometry(80,80),gndMat);
+  gnd.rotation.x=-Math.PI/2; gnd.receiveShadow=true; scene.add(gnd);
+  const grid=new THREE.GridHelper(60,30,0xc9a84c,0x141824);
+  grid.material.transparent=true; grid.material.opacity=0.22; scene.add(grid);
+
+  // Dust
+  const DC=150, dp=new Float32Array(DC*3);
+  for(let i=0;i<DC;i++){dp[i*3]=(Math.random()-.5)*18;dp[i*3+1]=Math.random()*38;dp[i*3+2]=(Math.random()-.5)*12;}
+  const dustGeo=new THREE.BufferGeometry();
+  dustGeo.setAttribute('position',new THREE.BufferAttribute(dp,3));
+  const dust=new THREE.Points(dustGeo,new THREE.PointsMaterial({color:0xc9a84c,size:0.07,transparent:true,opacity:0.4}));
+  grp.add(dust);
+
+  // Stars
+  const SC=700,sp=new Float32Array(SC*3);
+  for(let i=0;i<SC*3;i++) sp[i]=(Math.random()-.5)*250;
+  const starGeo=new THREE.BufferGeometry(); starGeo.setAttribute('position',new THREE.BufferAttribute(sp,3));
+  const stars=new THREE.Points(starGeo,new THREE.PointsMaterial({color:0xffffff,size:0.18,transparent:true,opacity:0.6}));
+  scene.add(stars);
+
+  // Lights
+  scene.add(new THREE.AmbientLight(0x0d1828,1.0));
+  const sun=new THREE.DirectionalLight(0x8ab4df,1.6); sun.position.set(-12,30,18); sun.castShadow=true;
+  sun.shadow.mapSize.set(2048,2048); sun.shadow.camera.left=-30; sun.shadow.camera.right=30;
+  sun.shadow.camera.top=55; sun.shadow.camera.bottom=-10; scene.add(sun);
+  const gL1=new THREE.PointLight(0xc9a84c,3.5,28); gL1.position.set(-9,6,9); scene.add(gL1);
+  const gL2=new THREE.PointLight(0xff7010,2.5,22);  gL2.position.set(7,3,7);  scene.add(gL2);
+  const spireL=new THREE.PointLight(0xff5500,5,14); spireL.position.set(0,TH+7,0); scene.add(spireL);
+  scene.add(new THREE.PointLight(0x1840b0,2,45)).position.set(6,22,-18);
+  scene.add(new THREE.PointLight(0xb06010,1.8,16)).position.set(0,1,12);
+
+  // Animate
+  let f=0;
+  (function animate(){
+    requestAnimationFrame(animate); f++;
+    grp.rotation.y += 0.0022;
+    camera.position.y = 10+Math.sin(f*0.004)*0.6;
+    camera.lookAt(0,13,0);
+    spireL.intensity = 3.5+Math.sin(f*0.07)*2.2;
+    tipM.material.emissiveIntensity = 2+Math.sin(f*0.09)*1.5;
+    gL1.position.x=-9+Math.sin(f*0.007)*4; gL1.position.z=9+Math.cos(f*0.007)*4;
+    for(let i=1;i<DC*3;i+=3){dp[i]+=0.009;if(dp[i]>38)dp[i]=0;}
+    dust.geometry.attributes.position.needsUpdate=true;
+    if(f%90===0&&litWins.length) litWins[Math.floor(Math.random()*litWins.length)].emissiveIntensity=Math.random()*2;
+    stars.rotation.y+=0.00008;
+    renderer.render(scene,camera);
+  })();
+
+  window.addEventListener('resize',()=>{
+    const nW=container.offsetWidth,nH=container.offsetHeight;
+    if(!nW||!nH) return;
+    camera.aspect=nW/nH; camera.updateProjectionMatrix(); renderer.setSize(nW,nH);
+  });
+}
+
+/* ══════════════════════════════════
+   SCROLL REVEAL
+══════════════════════════════════ */
+function setupReveal() {
+  const els = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) {
+    els.forEach(el => el.classList.add('in')); return;
+  }
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);} });
+  }, {threshold:0.08, rootMargin:'0px 0px -40px 0px'});
+  els.forEach(el => io.observe(el));
+}
+
+/* ══════════════════════════════════
+   COUNTER
+══════════════════════════════════ */
+function setupCounters() {
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(!e.isIntersecting) return;
+      const el=e.target, target=parseInt(el.dataset.target);
+      let cur=0; const inc=target/60;
+      const t=setInterval(()=>{
+        cur=Math.min(cur+inc,target);
+        el.textContent=Math.floor(cur)+(target>=100?'+':target>10?'+':'');
+        if(cur>=target)clearInterval(t);
+      },18);
+      io.unobserve(el);
+    });
+  },{threshold:0.5});
+  document.querySelectorAll('.stat-num[data-target]').forEach(el=>io.observe(el));
+}
+
+/* ══════════════════════════════════
+   EMAILJS
+══════════════════════════════════ */
+function sendEmail(e) {
+  e.preventDefault();
+  const btn=document.getElementById('submit-btn');
+  const status=document.getElementById('form-status');
+  const name=document.getElementById('from_name').value.trim();
+  const email=document.getElementById('from_email').value.trim();
+  const phone=document.getElementById('phone').value.trim();
+  const msg=document.getElementById('message').value.trim();
+  if(!name||!email||!msg){
+    status.style.cssText='display:block;background:rgba(200,50,50,0.08);border:1px solid rgba(200,50,50,0.3);color:#e07070;padding:13px 16px;';
+    status.textContent='✗ Please fill all required fields.'; return;
+  }
+  btn.textContent='Sending…'; btn.disabled=true; btn.style.opacity='0.7'; status.style.display='none';
+  emailjs.send('service_zqxhvmb','template_hq5ja55',{
+    from_name:name,user_name:name,name,from_email:email,user_email:email,email,reply_to:email,phone,message:msg,to_name:'PRIS Designs Team'
+  }).then(()=>{
+    status.style.cssText='display:block;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.4);color:#C9A84C;padding:13px 16px;';
+    status.textContent='✓ Message sent! We will be in touch shortly.';
+    document.getElementById('contact-form').reset();
+  }).catch(err=>{
+    console.error(err);
+    status.style.cssText='display:block;background:rgba(200,50,50,0.08);border:1px solid rgba(200,50,50,0.3);color:#e07070;padding:13px 16px;';
+    status.textContent='✗ Could not send. Please call +91 9930003578.';
+  }).finally(()=>{btn.textContent='Send Message';btn.disabled=false;btn.style.opacity='1';});
+}
+
+/* ══════════════════════════════════
+   BOOT
+══════════════════════════════════ */
+window.addEventListener('load', () => {
+  if(typeof emailjs !== 'undefined') emailjs.init({publicKey:'luVp8sA1JIHiNs1vy'});
+  initBuilding('building-3d');
+  initBuilding('building-3d-2');
+  setupReveal();
+  setupCounters();
+});
+</script>
+</body>
+</html>

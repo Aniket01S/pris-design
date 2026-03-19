@@ -9,14 +9,14 @@
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <style>
     :root {
-      --gold: #C9A84C;
-      --gold-light: #F0D080;
-      --gold-dim: rgba(201,168,76,0.15);
-      --dark:  #080C12;
-      --dark2: #0E1118;
-      --dark3: #141824;
-      --text:  #E8E2D5;
-      --muted: #7A8090;
+      --gold: #5C6B2E;
+      --gold-light: #7A9038;
+      --gold-dim: rgba(92,107,46,0.2);
+      --dark:  #F8F6EE;
+      --dark2: #EEEBDf;
+      --dark3: #E5E2D4;
+      --text:  #252818;
+      --muted: #585B42;
     }
     * { margin:0; padding:0; box-sizing:border-box; }
     html { scroll-behavior:smooth; }
@@ -29,7 +29,7 @@
       position:fixed; top:0; width:100%; z-index:999;
       display:flex; align-items:center; justify-content:space-between;
       padding:20px 60px;
-      background:rgba(8,12,18,0.96);
+      background:rgba(248,246,238,0.96);
       backdrop-filter:blur(14px);
       border-bottom:1px solid var(--gold-dim);
     }
@@ -48,11 +48,11 @@
     .hero {
       position:relative; height:100vh; min-height:600px;
       display:flex; align-items:center; overflow:hidden;
-      background:radial-gradient(ellipse 60% 80% at 20% 50%,rgba(201,168,76,0.05) 0%,transparent 70%),var(--dark);
+      background:radial-gradient(ellipse 60% 80% at 20% 50%,rgba(92,107,46,0.08) 0%,transparent 70%),var(--dark);
     }
     .hero::before {
       content:''; position:absolute; inset:0; z-index:0;
-      background-image:linear-gradient(rgba(201,168,76,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,0.03) 1px,transparent 1px);
+      background-image:linear-gradient(rgba(92,107,46,0.07) 1px,transparent 1px),linear-gradient(90deg,rgba(92,107,46,0.07) 1px,transparent 1px);
       background-size:60px 60px;
     }
     #building-3d {
@@ -81,18 +81,18 @@
     .btn-gold {
       padding:13px 32px; border:none; cursor:pointer;
       background:linear-gradient(135deg,var(--gold),var(--gold-light));
-      color:#080C12; font-family:'Montserrat',sans-serif;
+      color:#F8F6EE; font-family:'Montserrat',sans-serif;
       font-size:0.62rem; letter-spacing:0.2em; text-transform:uppercase; font-weight:700;
       clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
       transition:transform .3s,box-shadow .3s;
     }
-    .btn-gold:hover { transform:translateY(-2px); box-shadow:0 10px 30px rgba(201,168,76,0.4); }
+    .btn-gold:hover { transform:translateY(-2px); box-shadow:0 10px 30px rgba(92,107,46,0.4); }
     .btn-outline {
       padding:13px 32px; cursor:pointer; background:transparent; color:var(--text);
-      border:1px solid rgba(201,168,76,0.35); font-family:'Montserrat',sans-serif;
+      border:1px solid rgba(92,107,46,0.35); font-family:'Montserrat',sans-serif;
       font-size:0.62rem; letter-spacing:0.2em; text-transform:uppercase; transition:all .3s;
     }
-    .btn-outline:hover { border-color:var(--gold); color:var(--gold); background:rgba(201,168,76,0.04); }
+    .btn-outline:hover { border-color:var(--gold); color:var(--gold); background:rgba(92,107,46,0.04); }
 
     /* STATS BAR */
     .stats-bar { display:flex; background:var(--dark2); border-top:1px solid var(--gold-dim); border-bottom:1px solid var(--gold-dim); }
@@ -120,7 +120,8 @@
     .sbu-item::before { content:''; position:absolute; left:0; top:0; width:3px; height:100%; background:var(--gold); transform:scaleY(0); transition:transform .3s; }
     .sbu-item:hover { border-color:var(--gold); color:var(--gold); }
     .sbu-item:hover::before { transform:scaleY(1); }
-    #building-3d-2 { width:100%; height:400px; display:block; }
+    #building-3d-2 { width:100%; height:400px; display:block; background:transparent; }
+    #building-3d-2 canvas, #building-3d canvas { background:transparent !important; }
 
     /* SERVICES */
     #services { background:var(--dark); }
@@ -129,7 +130,7 @@
     .svc-card::after { content:''; position:absolute; bottom:0; left:0; width:100%; height:2px; background:linear-gradient(90deg,var(--gold),transparent); transform:scaleX(0); transform-origin:left; transition:transform .4s; }
     .svc-card:hover { background:var(--dark3); }
     .svc-card:hover::after { transform:scaleX(1); }
-    .svc-num { position:absolute; top:14px; right:18px; font-family:'Cormorant Garamond',serif; font-size:3.5rem; font-weight:700; color:rgba(201,168,76,0.06); line-height:1; }
+    .svc-num { position:absolute; top:14px; right:18px; font-family:'Cormorant Garamond',serif; font-size:3.5rem; font-weight:700; color:rgba(92,107,46,0.06); line-height:1; }
     .svc-icon { font-size:1.7rem; margin-bottom:18px; }
     .svc-card h3 { font-family:'Cormorant Garamond',serif; font-size:1.15rem; font-weight:600; color:var(--text); margin-bottom:10px; }
     .svc-card p { font-size:0.74rem; line-height:1.75; color:var(--muted); font-weight:300; }
@@ -138,7 +139,7 @@
     #leadership { background:var(--dark2); }
     .team-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
     .team-card { background:var(--dark); border:1px solid var(--gold-dim); overflow:hidden; transition:border-color .3s,transform .3s; }
-    .team-card:hover { border-color:rgba(201,168,76,0.5); transform:translateY(-6px); }
+    .team-card:hover { border-color:rgba(92,107,46,0.5); transform:translateY(-6px); }
     .team-avatar {
       width:100%; height:280px;
       background:linear-gradient(135deg,var(--dark3),var(--dark2));
@@ -161,7 +162,7 @@
     .workflow-grid { display:grid; grid-template-columns:1fr 1fr; gap:56px; }
     .workflow-block h3 { font-family:'Cormorant Garamond',serif; font-size:1.35rem; color:var(--gold); margin-bottom:28px; }
     .wf-step { display:flex; gap:22px; align-items:flex-start; padding:18px 0; border-bottom:1px solid var(--gold-dim); }
-    .wf-num { font-family:'Cormorant Garamond',serif; font-size:2.2rem; font-weight:700; color:rgba(201,168,76,0.2); line-height:1; flex-shrink:0; width:44px; }
+    .wf-num { font-family:'Cormorant Garamond',serif; font-size:2.2rem; font-weight:700; color:rgba(92,107,46,0.2); line-height:1; flex-shrink:0; width:44px; }
     .wf-text { padding-top:4px; font-size:0.8rem; line-height:1.7; color:var(--muted); font-weight:300; }
 
     /* WHY US */
@@ -177,7 +178,7 @@
     .tx-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:2px; }
     .tx-item { background:var(--dark2); padding:26px 22px; display:flex; align-items:center; gap:14px; border-left:3px solid transparent; transition:all .3s; }
     .tx-item:hover { border-left-color:var(--gold); background:var(--dark3); }
-    .tx-dot { width:7px; height:7px; border-radius:50%; background:var(--gold); flex-shrink:0; box-shadow:0 0 10px rgba(201,168,76,0.6); }
+    .tx-dot { width:7px; height:7px; border-radius:50%; background:var(--gold); flex-shrink:0; box-shadow:0 0 10px rgba(92,107,46,0.6); }
     .tx-city { font-size:0.58rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold); margin-bottom:4px; }
     .tx-brand { font-family:'Cormorant Garamond',serif; font-size:1.1rem; color:var(--text); }
 
@@ -186,7 +187,7 @@
     .brands-desc { font-size:0.8rem; color:var(--muted); margin-top:-34px; margin-bottom:44px; font-weight:300; }
     .brand-category { margin-bottom:44px; }
     .brand-cat-label { font-size:0.58rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--gold); margin-bottom:20px; display:flex; align-items:center; gap:14px; }
-    .brand-cat-label::after { content:''; flex:1; height:1px; background:linear-gradient(90deg,rgba(201,168,76,0.3),transparent); }
+    .brand-cat-label::after { content:''; flex:1; height:1px; background:linear-gradient(90deg,rgba(92,107,46,0.3),transparent); }
     .brand-track-wrap {
       overflow:hidden;
       width:100%;
@@ -205,12 +206,12 @@
       flex-shrink:0;
       width:160px; height:80px;
       background:var(--dark3);
-      border:1px solid rgba(201,168,76,0.25);
+      border:1px solid rgba(92,107,46,0.25);
       display:flex; align-items:center; justify-content:center;
       padding:14px;
       transition:border-color .3s, background .3s;
     }
-    .brand-card:hover { border-color:rgba(201,168,76,0.6); background:rgba(201,168,76,0.07); }
+    .brand-card:hover { border-color:rgba(92,107,46,0.6); background:rgba(92,107,46,0.07); }
     .brand-card img { max-width:100%; max-height:52px; object-fit:contain; display:block; }
     .brand-name-text {
       font-family:'Cormorant Garamond',serif;
@@ -771,7 +772,8 @@ function initBuilding(containerId) {
   const H = container.offsetHeight || 600;
 
   const scene = new THREE.Scene();
-  scene.fog   = new THREE.FogExp2(0x04080f, 0.016);
+  scene.fog   = new THREE.FogExp2(0xe8e5d8, 0.010);
+  scene.background = null;
 
   const camera = new THREE.PerspectiveCamera(42, W/H, 0.1, 500);
   camera.position.set(0, 10, 30);
@@ -779,21 +781,22 @@ function initBuilding(containerId) {
 
   const renderer = new THREE.WebGLRenderer({antialias:true, alpha:true});
   renderer.setSize(W, H);
+  renderer.setClearColor(0x000000, 0);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.shadowMap.enabled  = true;
   renderer.shadowMap.type     = THREE.PCFSoftShadowMap;
   renderer.toneMapping        = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure= 1.25;
+  renderer.toneMappingExposure= 0.7;
   container.appendChild(renderer.domElement);
 
   // Materials
-  const glassMat = new THREE.MeshPhysicalMaterial({color:0x071428, metalness:0.85, roughness:0.05, transparent:true, opacity:0.88});
-  const goldMat  = new THREE.MeshStandardMaterial({color:0xc9a84c, metalness:1.0, roughness:0.15});
-  const concMat  = new THREE.MeshStandardMaterial({color:0x0d1220, metalness:0.2, roughness:0.85});
-  const gndMat   = new THREE.MeshStandardMaterial({color:0x070b12, metalness:0.5, roughness:0.5});
-  const glowMat  = new THREE.MeshStandardMaterial({color:0x000000, emissive:0xff8800, emissiveIntensity:3});
-  const winOn    = () => { const m=new THREE.MeshStandardMaterial({color:0x000000, emissive:0xffd060, emissiveIntensity:0.7+Math.random()*1.3}); return m; };
-  const winOff   = new THREE.MeshStandardMaterial({color:0x040c1e, metalness:0.3, roughness:0.9});
+  const glassMat = new THREE.MeshPhysicalMaterial({color:0x6b8a70, metalness:0.3, roughness:0.15, transparent:true, opacity:0.80});
+  const goldMat  = new THREE.MeshStandardMaterial({color:0x5c6b2e, metalness:0.7, roughness:0.25});
+  const concMat  = new THREE.MeshStandardMaterial({color:0xa8a890, metalness:0.1, roughness:0.85});
+  const gndMat   = new THREE.MeshStandardMaterial({color:0x9a9880, metalness:0.1, roughness:0.8});
+  const glowMat  = new THREE.MeshStandardMaterial({color:0x7a9040, emissive:0x6b8020, emissiveIntensity:1.2});
+  const winOn    = () => { const m=new THREE.MeshStandardMaterial({color:0x8aaa70, emissive:0x5a7830, emissiveIntensity:0.3+Math.random()*0.4}); return m; };
+  const winOff   = new THREE.MeshStandardMaterial({color:0x7a8a68, metalness:0.1, roughness:0.9});
 
   const grp = new THREE.Group();
   scene.add(grp);
@@ -879,7 +882,7 @@ function initBuilding(containerId) {
   // Ground
   const gnd=new THREE.Mesh(new THREE.PlaneGeometry(80,80),gndMat);
   gnd.rotation.x=-Math.PI/2; gnd.receiveShadow=true; scene.add(gnd);
-  const grid=new THREE.GridHelper(60,30,0xc9a84c,0x141824);
+  const grid=new THREE.GridHelper(60,30,0x5c6b2e,0xc8c4b0);
   grid.material.transparent=true; grid.material.opacity=0.22; scene.add(grid);
 
   // Dust
@@ -887,26 +890,26 @@ function initBuilding(containerId) {
   for(let i=0;i<DC;i++){dp[i*3]=(Math.random()-.5)*18;dp[i*3+1]=Math.random()*38;dp[i*3+2]=(Math.random()-.5)*12;}
   const dustGeo=new THREE.BufferGeometry();
   dustGeo.setAttribute('position',new THREE.BufferAttribute(dp,3));
-  const dust=new THREE.Points(dustGeo,new THREE.PointsMaterial({color:0xc9a84c,size:0.07,transparent:true,opacity:0.4}));
+  const dust=new THREE.Points(dustGeo,new THREE.PointsMaterial({color:0x7a9030,size:0.07,transparent:true,opacity:0.35}));
   grp.add(dust);
 
   // Stars
   const SC=700,sp=new Float32Array(SC*3);
   for(let i=0;i<SC*3;i++) sp[i]=(Math.random()-.5)*250;
   const starGeo=new THREE.BufferGeometry(); starGeo.setAttribute('position',new THREE.BufferAttribute(sp,3));
-  const stars=new THREE.Points(starGeo,new THREE.PointsMaterial({color:0xffffff,size:0.18,transparent:true,opacity:0.6}));
+  const stars=new THREE.Points(starGeo,new THREE.PointsMaterial({color:0x5c6b2e,size:0.15,transparent:true,opacity:0.25}));
   scene.add(stars);
 
   // Lights
-  scene.add(new THREE.AmbientLight(0x0d1828,1.0));
-  const sun=new THREE.DirectionalLight(0x8ab4df,1.6); sun.position.set(-12,30,18); sun.castShadow=true;
+  scene.add(new THREE.AmbientLight(0xb8c8a0, 0.9));
+  const sun=new THREE.DirectionalLight(0xd8e8c0, 1.4); sun.position.set(-12,30,18); sun.castShadow=true;
   sun.shadow.mapSize.set(2048,2048); sun.shadow.camera.left=-30; sun.shadow.camera.right=30;
   sun.shadow.camera.top=55; sun.shadow.camera.bottom=-10; scene.add(sun);
-  const gL1=new THREE.PointLight(0xc9a84c,3.5,28); gL1.position.set(-9,6,9); scene.add(gL1);
-  const gL2=new THREE.PointLight(0xff7010,2.5,22);  gL2.position.set(7,3,7);  scene.add(gL2);
-  const spireL=new THREE.PointLight(0xff5500,5,14); spireL.position.set(0,TH+7,0); scene.add(spireL);
-  scene.add(new THREE.PointLight(0x1840b0,2,45)).position.set(6,22,-18);
-  scene.add(new THREE.PointLight(0xb06010,1.8,16)).position.set(0,1,12);
+  const gL1=new THREE.PointLight(0x6a7a30, 2.0, 28); gL1.position.set(-9,6,9); scene.add(gL1);
+  const gL2=new THREE.PointLight(0x88a040, 1.5, 22); gL2.position.set(7,3,7);  scene.add(gL2);
+  const spireL=new THREE.PointLight(0x6b8020, 2.5, 14); spireL.position.set(0,TH+7,0); scene.add(spireL);
+  scene.add(new THREE.PointLight(0x708040, 1.2, 45)).position.set(6,22,-18);
+  scene.add(new THREE.PointLight(0x90a060, 1.0, 16)).position.set(0,1,12);
 
   // Animate
   let f=0;
@@ -985,7 +988,7 @@ function sendEmail(e) {
   emailjs.send('service_zqxhvmb','template_hq5ja55',{
     from_name:name,user_name:name,name,from_email:email,user_email:email,email,reply_to:email,phone,message:msg,to_name:'PRIS Designs Team'
   }).then(()=>{
-    status.style.cssText='display:block;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.4);color:#C9A84C;padding:13px 16px;';
+    status.style.cssText='display:block;background:rgba(92,107,46,0.08);border:1px solid rgba(92,107,46,0.4);color:#5c6b2e;padding:13px 16px;';
     status.textContent='✓ Message sent! We will be in touch shortly.';
     document.getElementById('contact-form').reset();
   }).catch(err=>{

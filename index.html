@@ -274,8 +274,48 @@ nav a.active{color:var(--blue);}
 .prop-card:nth-child(3){transition-delay:.24s;}
 .prop-card:hover{transform:translateY(-6px);box-shadow:0 16px 48px rgba(27,60,122,.15);}
 .prop-img{position:relative;height:220px;overflow:hidden;}
-.prop-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s;}
-.prop-card:hover .prop-img img{transform:scale(1.06);}
+.prop-slider {width:100%;height:100%;position:relative;}
+.prop-slide {position:absolute;inset:0;opacity:0;transition:opacity .4s ease-in-out;z-index:1;}
+.prop-slide.active {opacity:1;z-index:2;}
+.prop-slide img{width:100%;height:100%;object-fit:cover;transition:transform .5s;}
+.prop-card:hover .prop-slide.active img{transform:scale(1.06);}
+
+.prop-prev, .prop-next {
+  position:absolute;top:50%;transform:translateY(-50%);
+  background:rgba(0,0,0,.45);color:#fff;border:none;
+  width:32px;height:32px;border-radius:50%;cursor:pointer;
+  z-index:10;display:none;align-items:center;justify-content:center;
+  font-size:.8rem;transition:background .2s,transform .2s;
+  backdrop-filter:blur(4px);
+}
+.prop-prev:hover, .prop-next:hover {background:var(--orange);transform:translateY(-50%) scale(1.1);}
+.prop-prev {left:10px;}
+.prop-next {right:10px;}
+
+.prop-dots {
+  position:absolute;bottom:12px;left:50%;transform:translateX(-50%);
+  display:none;gap:6px;z-index:10;
+  background:rgba(0,0,0,.3);padding:4px 8px;border-radius:20px;
+  backdrop-filter:blur(4px);
+}
+.pdot {
+  width:7px;height:7px;border-radius:50%;
+  background:rgba(255,255,255,.5);cursor:pointer;
+  transition:background .25s,transform .25s;
+}
+.pdot.active {background:var(--orange2);transform:scale(1.2);}
+
+.prop-upload {
+  position:absolute;top:14px;right:14px;
+  background:rgba(255,255,255,.9);color:var(--blue);
+  width:32px;height:32px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;z-index:10;
+  box-shadow:0 4px 12px rgba(0,0,0,.12);
+  transition:background .25s,transform .25s,color .25s;
+}
+.prop-upload:hover {background:var(--orange);color:#fff;transform:scale(1.1);}
+.prop-upload svg {width:14px;height:14px;fill:currentColor;}
 .prop-tag{
   position:absolute;top:14px;left:14px;
   background:var(--orange);color:#fff;
@@ -731,8 +771,8 @@ footer{
       <source src="construction-bg.webm" type="video/webm">
     </video>
   </div>
-  <div class="hero-overlay"></div>
-  <div class="hero-content">
+  <!-- <div class="hero-overlay"></div> -->
+  <!-- <div class="hero-content">
     <div class="hero-badge"><span class="dot"></span>Premium Real Estate Advisory</div>
     <h1 class="hero-h1">
       <span class="line"><span>Invest Today in</span></span>
@@ -743,10 +783,10 @@ footer{
       <button class="btn-orange" onclick="document.getElementById('featured').scrollIntoView({behavior:'smooth'})">View Properties</button>
       <button class="btn-outline-white" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Contact Now</button>
     </div>
-  </div>
+  </div> -->
 
   <!-- SEARCH BAR -->
-  <div class="hero-search-bar">
+  <!-- <div class="hero-search-bar">
     <div class="hbar-field">
       <label>Enter Keywords</label>
       <input type="text" placeholder="e.g. Mumbai, Starbucks...">
@@ -772,7 +812,7 @@ footer{
       <select><option>Any</option><option>Parking</option><option>Metro Access</option><option>Highway</option></select>
     </div>
     <button class="btn-search">🔍 Search</button>
-  </div>
+  </div> -->
 </section>
 
 <!-- STATS STRIP -->
@@ -808,9 +848,23 @@ footer{
     <button class="btn-orange" onclick="document.getElementById('transactions').scrollIntoView({behavior:'smooth'})">View All Deals →</button>
   </div>
   <div class="prop-grid">
+    <!-- Card 1 -->
     <div class="prop-card">
       <div class="prop-img">
-        <img src="https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=600&q=80" alt="Mall Interior">
+        <div class="prop-slider">
+          <div class="prop-slide active">
+            <img src="https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=600&q=80" alt="Starbucks Interior">
+          </div>
+        </div>
+        <button class="prop-prev" onclick="moveCardSlide(this, -1)">&#10094;</button>
+        <button class="prop-next" onclick="moveCardSlide(this, 1)">&#10095;</button>
+        <div class="prop-dots">
+          <span class="pdot active" onclick="setCardSlide(this, 0)"></span>
+        </div>
+        <label class="prop-upload" title="Upload more images">
+          <input type="file" multiple accept="image/*" onchange="addImagesToCard(event, this)" style="display: none;">
+          <svg viewBox="0 0 24 24"><path d="M4 4h3l2-2h6l2 2h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm8 3a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6z"/></svg>
+        </label>
         <span class="prop-tag">Leased</span>
       </div>
       <div class="prop-body">
@@ -824,9 +878,24 @@ footer{
         <div class="prop-footer"><button class="btn-view">View Deal</button></div>
       </div>
     </div>
+
+    <!-- Card 2 -->
     <div class="prop-card">
       <div class="prop-img">
-        <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=600&q=80" alt="Mall">
+        <div class="prop-slider">
+          <div class="prop-slide active">
+            <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=600&q=80" alt="Inorbit Mall">
+          </div>
+        </div>
+        <button class="prop-prev" onclick="moveCardSlide(this, -1)">&#10094;</button>
+        <button class="prop-next" onclick="moveCardSlide(this, 1)">&#10095;</button>
+        <div class="prop-dots">
+          <span class="pdot active" onclick="setCardSlide(this, 0)"></span>
+        </div>
+        <label class="prop-upload" title="Upload more images">
+          <input type="file" multiple accept="image/*" onchange="addImagesToCard(event, this)" style="display: none;">
+          <svg viewBox="0 0 24 24"><path d="M4 4h3l2-2h6l2 2h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm8 3a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6z"/></svg>
+        </label>
         <span class="prop-tag blue-tag">Available</span>
       </div>
       <div class="prop-body">
@@ -840,9 +909,24 @@ footer{
         <div class="prop-footer"><button class="btn-view">View Deal</button></div>
       </div>
     </div>
+
+    <!-- Card 3 -->
     <div class="prop-card">
       <div class="prop-img">
-        <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=600&q=80" alt="Mall Exterior">
+        <div class="prop-slider">
+          <div class="prop-slide active">
+            <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=600&q=80" alt="Nexus Select City">
+          </div>
+        </div>
+        <button class="prop-prev" onclick="moveCardSlide(this, -1)">&#10094;</button>
+        <button class="prop-next" onclick="moveCardSlide(this, 1)">&#10095;</button>
+        <div class="prop-dots">
+          <span class="pdot active" onclick="setCardSlide(this, 0)"></span>
+        </div>
+        <label class="prop-upload" title="Upload more images">
+          <input type="file" multiple accept="image/*" onchange="addImagesToCard(event, this)" style="display: none;">
+          <svg viewBox="0 0 24 24"><path d="M4 4h3l2-2h6l2 2h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm8 3a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6z"/></svg>
+        </label>
         <span class="prop-tag">Leased</span>
       </div>
       <div class="prop-body">
@@ -856,6 +940,190 @@ footer{
         <div class="prop-footer"><button class="btn-view">View Deal</button></div>
       </div>
     </div>
+
+    <!-- Card 4 (Bewakoof) -->
+    <div class="prop-card">
+      <div class="prop-img">
+        <div class="prop-slider">
+          <div class="prop-slide active">
+            <img src="Assets/feature card/bewakoof/baekoof malad.jpeg" alt="Bewakoof Malad">
+          </div>
+          <div class="prop-slide">
+            <img src="Assets/feature card/bewakoof/baekoof inorbit mall malad.jpeg" alt="Bewakoof Inorbit Mall Malad">
+          </div>
+        </div>
+        <button class="prop-prev" onclick="moveCardSlide(this, -1)">&#10094;</button>
+        <button class="prop-next" onclick="moveCardSlide(this, 1)">&#10095;</button>
+        <div class="prop-dots">
+          <span class="pdot active" onclick="setCardSlide(this, 0)"></span>
+          <span class="pdot" onclick="setCardSlide(this, 1)"></span>
+        </div>
+        <label class="prop-upload" title="Upload more images">
+          <input type="file" multiple accept="image/*" onchange="addImagesToCard(event, this)" style="display: none;">
+          <svg viewBox="0 0 24 24"><path d="M4 4h3l2-2h6l2 2h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm8 3a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6z"/></svg>
+        </label>
+        <span class="prop-tag">Leased</span>
+      </div>
+      <div class="prop-body">
+        <div class="prop-name">Inorbit Mall — Bewakoof</div>
+        <div class="prop-loc">📍 Mumbai, Maharashtra</div>
+        <div class="prop-meta">
+          <div class="prop-meta-item"><span>📐</span> 1,500 sq ft</div>
+          <div class="prop-meta-item"><span>🏬</span> Fashion</div>
+          <div class="prop-meta-item"><span>⭐</span> Premium</div>
+        </div>
+        <div class="prop-footer"><button class="btn-view">View Deal</button></div>
+      </div>
+    </div>
+
+    <!-- Card 5 (Nobero) -->
+    <div class="prop-card">
+      <div class="prop-img">
+        <div class="prop-slider">
+          <div class="prop-slide active">
+            <img src="Assets/feature card/nobero/nobero malad.jpeg" alt="Nobero Malad">
+          </div>
+          <div class="prop-slide">
+            <img src="Assets/feature card/nobero/nobero malad orbit mall.jpeg" alt="Nobero Malad Inorbit Mall">
+          </div>
+        </div>
+        <button class="prop-prev" onclick="moveCardSlide(this, -1)">&#10094;</button>
+        <button class="prop-next" onclick="moveCardSlide(this, 1)">&#10095;</button>
+        <div class="prop-dots">
+          <span class="pdot active" onclick="setCardSlide(this, 0)"></span>
+          <span class="pdot" onclick="setCardSlide(this, 1)"></span>
+        </div>
+        <label class="prop-upload" title="Upload more images">
+          <input type="file" multiple accept="image/*" onchange="addImagesToCard(event, this)" style="display: none;">
+          <svg viewBox="0 0 24 24"><path d="M4 4h3l2-2h6l2 2h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm8 3a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6z"/></svg>
+        </label>
+        <span class="prop-tag">Leased</span>
+      </div>
+      <div class="prop-body">
+        <div class="prop-name">Inorbit Mall — Nobero</div>
+        <div class="prop-loc">📍 Mumbai, Maharashtra</div>
+        <div class="prop-meta">
+          <div class="prop-meta-item"><span>📐</span> 1,200 sq ft</div>
+          <div class="prop-meta-item"><span>🏬</span> Fashion</div>
+          <div class="prop-meta-item"><span>⭐</span> Premium</div>
+        </div>
+        <div class="prop-footer"><button class="btn-view">View Deal</button></div>
+      </div>
+    </div>
+
+    <!-- Card 6 (Salt) -->
+    <div class="prop-card">
+      <div class="prop-img">
+        <div class="prop-slider">
+          <div class="prop-slide active">
+            <img src="Assets/feature card/salt/salt malad.jpeg" alt="Salt Malad">
+          </div>
+          <div class="prop-slide">
+            <img src="Assets/feature card/salt/aslt malad.jpeg" alt="Salt Malad Alt">
+          </div>
+          <div class="prop-slide">
+            <img src="Assets/feature card/salt/salt bar res grill in  inorbit mall malad.jpeg" alt="Salt Bar & Grill">
+          </div>
+        </div>
+        <button class="prop-prev" onclick="moveCardSlide(this, -1)">&#10094;</button>
+        <button class="prop-next" onclick="moveCardSlide(this, 1)">&#10095;</button>
+        <div class="prop-dots">
+          <span class="pdot active" onclick="setCardSlide(this, 0)"></span>
+          <span class="pdot" onclick="setCardSlide(this, 1)"></span>
+          <span class="pdot" onclick="setCardSlide(this, 2)"></span>
+        </div>
+        <label class="prop-upload" title="Upload more images">
+          <input type="file" multiple accept="image/*" onchange="addImagesToCard(event, this)" style="display: none;">
+          <svg viewBox="0 0 24 24"><path d="M4 4h3l2-2h6l2 2h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm8 3a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6z"/></svg>
+        </label>
+        <span class="prop-tag">Leased</span>
+      </div>
+      <div class="prop-body">
+        <div class="prop-name">Inorbit Mall — Salt Bar & Grill</div>
+        <div class="prop-loc">📍 Mumbai, Maharashtra</div>
+        <div class="prop-meta">
+          <div class="prop-meta-item"><span>📐</span> 4,500 sq ft</div>
+          <div class="prop-meta-item"><span>🏬</span> F&B</div>
+          <div class="prop-meta-item"><span>⭐</span> Premium</div>
+        </div>
+        <div class="prop-footer"><button class="btn-view">View Deal</button></div>
+      </div>
+    </div>
+
+    <!-- Card 7 (Style Bazar) -->
+    <div class="prop-card">
+      <div class="prop-img">
+        <div class="prop-slider">
+          <div class="prop-slide active">
+            <img src="Assets/feature card/style bazar/style bazar.png" alt="Style Bazar">
+          </div>
+        </div>
+        <button class="prop-prev" onclick="moveCardSlide(this, -1)">&#10094;</button>
+        <button class="prop-next" onclick="moveCardSlide(this, 1)">&#10095;</button>
+        <div class="prop-dots">
+          <span class="pdot active" onclick="setCardSlide(this, 0)"></span>
+        </div>
+        <label class="prop-upload" title="Upload more images">
+          <input type="file" multiple accept="image/*" onchange="addImagesToCard(event, this)" style="display: none;">
+          <svg viewBox="0 0 24 24"><path d="M4 4h3l2-2h6l2 2h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm8 3a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6z"/></svg>
+        </label>
+        <span class="prop-tag blue-tag">Available</span>
+      </div>
+      <div class="prop-body">
+        <div class="prop-name">High Street — Style Bazar</div>
+        <div class="prop-loc">📍 Kolkata, West Bengal</div>
+        <div class="prop-meta">
+          <div class="prop-meta-item"><span>📐</span> 8,500 sq ft</div>
+          <div class="prop-meta-item"><span>🏬</span> Fashion</div>
+          <div class="prop-meta-item"><span>⭐</span> Grade-A</div>
+        </div>
+        <div class="prop-footer"><button class="btn-view">View Deal</button></div>
+      </div>
+    </div>
+
+    <!-- Card 8 (Toscano) -->
+    <div class="prop-card">
+      <div class="prop-img">
+        <div class="prop-slider">
+          <div class="prop-slide active">
+            <img src="Assets/feature card/toscano/toscano pizzeria malad.jpeg" alt="Toscano Pizzeria">
+          </div>
+          <div class="prop-slide">
+            <img src="Assets/feature card/toscano/toscano bar malad oprbit mall.jpeg" alt="Toscano Bar Malad Orbit Mall">
+          </div>
+          <div class="prop-slide">
+            <img src="Assets/feature card/toscano/toscano pizeria.jpeg" alt="Toscano Pizzeria Alt">
+          </div>
+          <div class="prop-slide">
+            <img src="Assets/feature card/toscano/toscano pizzeria malad 1.jpeg" alt="Toscano Pizzeria Detail">
+          </div>
+        </div>
+        <button class="prop-prev" onclick="moveCardSlide(this, -1)">&#10094;</button>
+        <button class="prop-next" onclick="moveCardSlide(this, 1)">&#10095;</button>
+        <div class="prop-dots">
+          <span class="pdot active" onclick="setCardSlide(this, 0)"></span>
+          <span class="pdot" onclick="setCardSlide(this, 1)"></span>
+          <span class="pdot" onclick="setCardSlide(this, 2)"></span>
+          <span class="pdot" onclick="setCardSlide(this, 3)"></span>
+        </div>
+        <label class="prop-upload" title="Upload more images">
+          <input type="file" multiple accept="image/*" onchange="addImagesToCard(event, this)" style="display: none;">
+          <svg viewBox="0 0 24 24"><path d="M4 4h3l2-2h6l2 2h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm8 3a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6z"/></svg>
+        </label>
+        <span class="prop-tag">Leased</span>
+      </div>
+      <div class="prop-body">
+        <div class="prop-name">Inorbit Mall — Toscano Pizzeria</div>
+        <div class="prop-loc">📍 Mumbai, Maharashtra</div>
+        <div class="prop-meta">
+          <div class="prop-meta-item"><span>📐</span> 2,800 sq ft</div>
+          <div class="prop-meta-item"><span>🏬</span> F&B</div>
+          <div class="prop-meta-item"><span>⭐</span> Premium</div>
+        </div>
+        <div class="prop-footer"><button class="btn-view">View Deal</button></div>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -1252,6 +1520,132 @@ function sendEmail(e){
   .catch(err=>{console.error(err);status.style.display='block';status.style.color='#ff6b6b';status.textContent='✗ Could not send. Please call +91 9930003578.';})
   .finally(()=>{btn.textContent='Send Message 🚀';btn.disabled=false;});
 }
+/* ── PROPERTY CARD SLIDERS & UPLOAD ── */
+function updateSliderState(propImg) {
+  const slides = propImg.querySelectorAll('.prop-slide');
+  const dots = propImg.querySelectorAll('.pdot');
+  const prevBtn = propImg.querySelector('.prop-prev');
+  const nextBtn = propImg.querySelector('.prop-next');
+  const dotsContainer = propImg.querySelector('.prop-dots');
+  
+  let activeIndex = 0;
+  slides.forEach((slide, idx) => {
+    if (slide.classList.contains('active')) {
+      activeIndex = idx;
+    }
+  });
+  
+  if (activeIndex >= slides.length || activeIndex < 0) {
+    activeIndex = 0;
+  }
+  
+  slides.forEach((slide, idx) => {
+    if (idx === activeIndex) {
+      slide.classList.add('active');
+    } else {
+      slide.classList.remove('active');
+    }
+  });
+  
+  dots.forEach((dot, idx) => {
+    if (idx === activeIndex) {
+      dot.classList.add('active');
+    } else {
+      dot.classList.remove('active');
+    }
+  });
+  
+  const showControls = slides.length > 1;
+  if (prevBtn) prevBtn.style.display = showControls ? 'flex' : 'none';
+  if (nextBtn) nextBtn.style.display = showControls ? 'flex' : 'none';
+  if (dotsContainer) dotsContainer.style.display = showControls ? 'flex' : 'none';
+}
+
+function moveCardSlide(btn, direction) {
+  const propImg = btn.closest('.prop-img');
+  const slides = propImg.querySelectorAll('.prop-slide');
+  if (slides.length <= 1) return;
+  
+  let activeIndex = 0;
+  slides.forEach((slide, idx) => {
+    if (slide.classList.contains('active')) {
+      activeIndex = idx;
+    }
+  });
+  
+  slides[activeIndex].classList.remove('active');
+  let newIndex = (activeIndex + direction + slides.length) % slides.length;
+  slides[newIndex].classList.add('active');
+  
+  updateSliderState(propImg);
+}
+
+function setCardSlide(dot, slideIndex) {
+  const propImg = dot.closest('.prop-img');
+  const slides = propImg.querySelectorAll('.prop-slide');
+  const dots = propImg.querySelectorAll('.pdot');
+  
+  slides.forEach(s => s.classList.remove('active'));
+  dots.forEach(d => d.classList.remove('active'));
+  
+  if (slides[slideIndex]) slides[slideIndex].classList.add('active');
+  if (dots[slideIndex]) dots[slideIndex].classList.add('active');
+  
+  updateSliderState(propImg);
+}
+
+function addImagesToCard(event, inputEl) {
+  const files = event.target.files;
+  if (!files || files.length === 0) return;
+  
+  const propImg = inputEl.closest('.prop-img');
+  const slider = propImg.querySelector('.prop-slider');
+  const dotsContainer = propImg.querySelector('.prop-dots');
+  
+  let currentCount = slider.children.length;
+  
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    const url = URL.createObjectURL(file);
+    
+    // Create new slide
+    const slide = document.createElement('div');
+    slide.className = 'prop-slide';
+    const img = document.createElement('img');
+    img.src = url;
+    img.alt = 'Uploaded Image';
+    slide.appendChild(img);
+    slider.appendChild(slide);
+    
+    // Create new dot
+    const dot = document.createElement('span');
+    dot.className = 'pdot';
+    const index = currentCount + i;
+    dot.onclick = function() { setCardSlide(this, index); };
+    dotsContainer.appendChild(dot);
+  }
+  
+  // Set the first newly uploaded image as active
+  const slides = propImg.querySelectorAll('.prop-slide');
+  slides.forEach(s => s.classList.remove('active'));
+  if (slides[currentCount]) {
+    slides[currentCount].classList.add('active');
+  }
+  
+  updateSliderState(propImg);
+}
+
+// Run initial configurations
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.prop-img').forEach(propImg => {
+    updateSliderState(propImg);
+  });
+});
+window.addEventListener('load', () => {
+  document.querySelectorAll('.prop-img').forEach(propImg => {
+    updateSliderState(propImg);
+  });
+});
 
 /* ── MALL VIDEO SLIDER ── */
 let currentSlide = 0;

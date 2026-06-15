@@ -583,19 +583,107 @@ nav a.active{color:var(--blue);}
 /* ═══════════════════════════ CONTACT ═══════════════════════════ */
 #contact{
   background:linear-gradient(135deg,var(--blue) 0%,#0d2040 100%);
-  display:grid;grid-template-columns:1fr 1fr;gap:80px;
 }
-.contact-info .s-h2{margin-bottom:40px;}
-.c-block{margin-bottom:28px;}
-.c-lbl{font-size:.62rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:8px;}
-.c-val{font-size:.9rem;color:rgba(255,255,255,.8);line-height:1.7;font-weight:300;}
-.c-val a{color:rgba(255,255,255,.8);transition:color .25s;}
-.c-val a:hover{color:var(--orange2);}
-.off-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;}
+.contact-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+.contact-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 36px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  position: relative;
+  overflow: hidden;
+}
+.contact-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: radial-gradient(circle at 10% 10%, rgba(242, 107, 29, 0.08) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+.contact-card:hover::before {
+  opacity: 1;
+}
+.contact-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--orange2);
+  box-shadow: 0 12px 30px rgba(242, 107, 29, 0.06);
+}
+.cc-icon-wrap {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(242, 107, 29, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--orange2);
+  transition: all 0.3s ease;
+}
+.contact-card:hover .cc-icon-wrap {
+  background: var(--orange);
+  color: #fff;
+  transform: scale(1.05);
+}
+.cc-icon-wrap svg {
+  width: 24px;
+  height: 24px;
+}
+.cc-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+.cc-lbl {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+}
+.cc-val {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+  font-weight: 300;
+}
+.cc-link {
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  font-weight: 400;
+  transition: color 0.25s;
+  display: inline-block;
+}
+.cc-link:hover {
+  color: var(--orange2);
+}
+.off-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
 .off-tag{
-  padding:6px 14px;border:1px solid rgba(255,255,255,.15);border-radius:20px;
-  font-size:.62rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;
-  color:rgba(255,255,255,.5);transition:all .25s;
+  padding: 6px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  font-size: .62rem;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .5);
+  transition: all .25s;
 }
 .off-tag:hover{border-color:var(--orange);color:var(--orange);}
 
@@ -915,6 +1003,7 @@ footer::after {
   .tx-grid{grid-template-columns:repeat(2,1fr);}
   .footer-grid{grid-template-columns:1fr 1fr;gap:36px;}
   #contact{grid-template-columns:1fr;gap:50px;}
+  .contact-grid{grid-template-columns:1fr;gap:24px;}
   .gallery-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto;}
   .gallery-cell.large{grid-row:span 1;}
   .proc-grid{grid-template-columns:1fr;}
@@ -1083,7 +1172,7 @@ footer::after {
         <span class="prop-tag">Leased</span>
       </div>
       <div class="prop-body">
-        <div class="prop-name">Phoenix Market City — Starbucks</div>
+        <div class="prop-name">Lokhandwala — Starbucks</div>
         <div class="prop-loc">📍 Mumbai, Maharashtra</div>
         <div class="prop-meta">
           <div class="prop-meta-item"><span>📐</span> 1,800 sq ft</div>
@@ -1130,13 +1219,17 @@ footer::after {
       <div class="prop-img">
         <div class="prop-slider">
           <div class="prop-slide active">
-            <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=600&q=80" alt="Nexus Select City">
+            <img src="Assets/feature card/kfc/image.png" alt="KFC College Road">
+          </div>
+          <div class="prop-slide">
+            <img src="Assets/feature card/kfc/kfc - Copy.jpg" alt="KFC Storefront">
           </div>
         </div>
         <button class="prop-prev" onclick="moveCardSlide(this, -1)">&#10094;</button>
         <button class="prop-next" onclick="moveCardSlide(this, 1)">&#10095;</button>
         <div class="prop-dots">
           <span class="pdot active" onclick="setCardSlide(this, 0)"></span>
+          <span class="pdot" onclick="setCardSlide(this, 1)"></span>
         </div>
         <label class="prop-upload" title="Upload more images">
           <input type="file" multiple accept="image/*" onchange="addImagesToCard(event, this)" style="display: none;">
@@ -1145,7 +1238,7 @@ footer::after {
         <span class="prop-tag">Leased</span>
       </div>
       <div class="prop-body">
-        <div class="prop-name">Nexus Select City — KFC</div>
+        <div class="prop-name">College Road — KFC</div>
         <div class="prop-loc">📍 Nashik, Maharashtra</div>
         <div class="prop-meta">
           <div class="prop-meta-item"><span>📐</span> 2,400 sq ft</div>
@@ -1180,8 +1273,8 @@ footer::after {
         <span class="prop-tag">Leased</span>
       </div>
       <div class="prop-body">
-        <div class="prop-name">Inorbit Mall — Bewakoof</div>
-        <div class="prop-loc">📍 Mumbai, Maharashtra</div>
+        <div class="prop-name">Metro Junction Mall — Bewakoof</div>
+        <div class="prop-loc">📍 Kalyan, Maharashtra</div>
         <div class="prop-meta">
           <div class="prop-meta-item"><span>📐</span> 1,500 sq ft</div>
           <div class="prop-meta-item"><span>🏬</span> Fashion</div>
@@ -1215,8 +1308,8 @@ footer::after {
         <span class="prop-tag">Leased</span>
       </div>
       <div class="prop-body">
-        <div class="prop-name">Inorbit Mall — Nobero</div>
-        <div class="prop-loc">📍 Mumbai, Maharashtra</div>
+        <div class="prop-name">Metro Junction Mall — Nobero</div>
+        <div class="prop-loc">📍 Kalyan, Maharashtra</div>
         <div class="prop-meta">
           <div class="prop-meta-item"><span>📐</span> 1,200 sq ft</div>
           <div class="prop-meta-item"><span>🏬</span> Fashion</div>
@@ -1616,30 +1709,66 @@ footer::after {
 
 <!-- CONTACT -->
 <section id="contact" class="s-pad">
-  <div class="contact-info">
-    <div class="s-tag">Get In Touch</div>
-    <h2 class="s-h2 light">Let's Build<br><em style="color:var(--orange2)">Something Great</em></h2>
-    <div class="c-block"><div class="c-lbl">Head Office</div><div class="c-val">424/A Wing Bonanza Building<br>Sahar Plaza, J.B Nagar<br>Andheri East, Mumbai 400059</div></div>
-    <div class="c-block"><div class="c-lbl">Phone</div><div class="c-val"><a href="tel:+919930003578">+91 9930003578</a></div></div>
-    <div class="c-block"><div class="c-lbl">Email</div><div class="c-val"><a href="mailto:Prem@prisdesigns.in"><span>Prem@prisdesigns.in</span></a></div></div>
-    <div class="c-block"><div class="c-lbl">Branch Offices</div>
-      <div class="off-tags">
-        <span class="off-tag">Mumbai</span><span class="off-tag">Kolkata</span>
-        <span class="off-tag">Hyderabad</span><span class="off-tag">Bangalore</span><span class="off-tag">Dubai</span>
-      </div>
+  <div class="contact-container">
+    <div style="text-align: center; margin-bottom: 50px;">
+      <div class="s-tag" style="justify-content: center;">Get In Touch</div>
+      <h2 class="s-h2 light">Let's Build <em style="color:var(--orange2)">Something Great</em></h2>
     </div>
-  </div>
-  <div>
-    <div class="cform-wrap">
-      <div class="cform-title">Send Us a Message</div>
-      <form class="cform" id="contact-form" onsubmit="sendEmail(event)">
-        <div class="cf-group"><label>Full Name</label><input type="text" id="from_name" placeholder="Your full name" required></div>
-        <div class="cf-group"><label>Email Address</label><input type="email" id="from_email" placeholder="your@email.com" required></div>
-        <div class="cf-group"><label>Phone Number</label><input type="tel" id="phone" placeholder="+91 XXXXX XXXXX"></div>
-        <div class="cf-group"><label>Your Message</label><textarea id="message" placeholder="Tell us about your requirement…" required></textarea></div>
-        <button type="submit" class="btn-csubmit" id="submit-btn">Send Message 🚀</button>
-        <div id="fstatus"></div>
-      </form>
+    
+    <div class="contact-grid">
+      <!-- Card 1: Head Office -->
+      <div class="contact-card">
+        <div class="cc-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+            <circle cx="12" cy="10" r="3"></circle>
+          </svg>
+        </div>
+        <div class="cc-content">
+          <div class="cc-lbl">Head Office</div>
+          <div class="cc-val">424/A Wing Bonanza Building, Sahar Plaza, J.B Nagar, Andheri East, Mumbai 400059</div>
+        </div>
+      </div>
+      
+      <!-- Card 2: Direct Contact -->
+      <div class="contact-card">
+        <div class="cc-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+          </svg>
+        </div>
+        <div class="cc-content">
+          <div class="cc-lbl">Call or Email</div>
+          <div class="cc-val">
+            <a href="tel:+919930003578" class="cc-link">+91 9930003578</a>
+            <span style="display:block; margin: 6px 0; border-bottom:1px solid rgba(255,255,255,0.05);"></span>
+            <a href="mailto:Prem@prisdesigns.in" class="cc-link">Prem@prisdesigns.in</a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Card 3: Branch Offices -->
+      <div class="contact-card">
+        <div class="cc-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="2" ry="2"></rect>
+            <path d="M7 21v-4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v4"></path>
+            <path d="M8 7h.01"></path>
+            <path d="M12 7h.01"></path>
+            <path d="M16 7h.01"></path>
+            <path d="M8 11h.01"></path>
+            <path d="M12 11h.01"></path>
+            <path d="M16 11h.01"></path>
+          </svg>
+        </div>
+        <div class="cc-content">
+          <div class="cc-lbl">Branch Offices</div>
+          <div class="off-tags">
+            <span class="off-tag">Mumbai</span><span class="off-tag">Kolkata</span>
+            <span class="off-tag">Hyderabad</span><span class="off-tag">Bangalore</span><span class="off-tag">Dubai</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
